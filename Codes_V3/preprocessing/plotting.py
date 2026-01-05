@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from ..raw_data.iq_container import RawIQData
+from raw_data.iq_container import RawIQData
 
 def plot_iq_trace(
     raw: RawIQData,
