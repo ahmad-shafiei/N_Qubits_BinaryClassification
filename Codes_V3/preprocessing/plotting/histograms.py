@@ -1,36 +1,39 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from raw_data.iq_container import RawIQData
-from preprocessing.utils import get_complex_iq
+import numpy as np
 
-
-def plot_iq_histograms(
-    raw: RawIQData,
-    shot: int = 0,
-    qubit: int = 0,
-    bins: int = 50,
-    max_points: int | None = None,
-):
+def plot_iq_histograms(samples1, samples2, label1="State1", label2="State2", qubit_index=0):
     """
-    Plot histograms and CDFs of I and Q components.
+    Plot histograms + CDFs for IQ samples comparison between two states.
+    
+    samples1, samples2: np.ndarray, shape (time_steps, 2) -> [I,Q]
     """
-    samples = get_complex_iq(raw, shot, qubit, max_points)
-    I, Q = samples.real, samples.imag
+    I1, Q1 = samples1[:,0], samples1[:,1]
+    I2, Q2 = samples2[:,0], samples2[:,1]
 
-    fig, axes = plt.subplots(2, 2, figsize=(5, 4))
+    fig, axes = plt.subplots(2,2, figsize=(6,5))
 
-    axes[0, 0].hist(I, bins=bins, alpha=0.7)
-    axes[0, 0].set_title("Histogram — I")
+    # Histogram I
+    axes[0,0].hist(I1, bins=50, alpha=0.6, color="blue", label=label1)
+    axes[0,0].hist(I2, bins=50, alpha=0.6, color="red", label=label2)
+    axes[0,0].set_title("Histogram — I")
+    axes[0,0].legend()
 
-    axes[0, 1].hist(Q, bins=bins, alpha=0.7)
-    axes[0, 1].set_title("Histogram — Q")
+    # Histogram Q
+    axes[0,1].hist(Q1, bins=50, alpha=0.6, color="blue", label=label1)
+    axes[0,1].hist(Q2, bins=50, alpha=0.6, color="red", label=label2)
+    axes[0,1].set_title("Histogram — Q")
+    axes[0,1].legend()
 
-    axes[1, 0].plot(np.sort(I), np.linspace(0, 1, len(I)))
-    axes[1, 0].set_title("CDF — I")
+    # CDF I
+    axes[1,0].plot(np.sort(I1), np.linspace(0,1,len(I1)), color="blue", label=label1)
+    axes[1,0].plot(np.sort(I2), np.linspace(0,1,len(I2)), color="red", label=label2)
+    axes[1,0].set_title("CDF — I")
 
-    axes[1, 1].plot(np.sort(Q), np.linspace(0, 1, len(Q)))
-    axes[1, 1].set_title("CDF — Q")
+    # CDF Q
+    axes[1,1].plot(np.sort(Q1), np.linspace(0,1,len(Q1)), color="blue", label=label1)
+    axes[1,1].plot(np.sort(Q2), np.linspace(0,1,len(Q2)), color="red", label=label2)
+    axes[1,1].set_title("CDF — Q")
 
-    fig.suptitle(f"Qubit {qubit+1}, Shot {shot}")
+    plt.suptitle(f"Qubit {qubit_index+1}")
     plt.tight_layout()
     plt.show()
