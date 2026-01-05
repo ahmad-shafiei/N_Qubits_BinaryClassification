@@ -1,40 +1,36 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from raw_data.iq_container import RawIQData
+from preprocessing.utils import get_complex_iq
 
-# -----------------------------------------------------------
-# Histograms + CDFs
-# -----------------------------------------------------------
-def plot_histograms_and_cdf(samples1, samples2,
-                            state1, state2,
-                            qubit_index):
 
-    I1, Q1 = samples1.real, samples1.imag
-    I2, Q2 = samples2.real, samples2.imag
+def plot_iq_histograms(
+    raw: RawIQData,
+    shot: int = 0,
+    qubit: int = 0,
+    bins: int = 50,
+    max_points: int | None = None,
+):
+    """
+    Plot histograms and CDFs of I and Q components.
+    """
+    samples = get_complex_iq(raw, shot, qubit, max_points)
+    I, Q = samples.real, samples.imag
 
-    fig, axes = plt.subplots(2, 2, figsize=(6, 5))
+    fig, axes = plt.subplots(2, 2, figsize=(5, 4))
 
-    # Histogram I
-    axes[0, 0].hist(I1, bins=50, alpha=0.6, label=state1)
-    axes[0, 0].hist(I2, bins=50, alpha=0.6, label=state2)
+    axes[0, 0].hist(I, bins=bins, alpha=0.7)
     axes[0, 0].set_title("Histogram — I")
-    axes[0, 0].legend()
 
-    # Histogram Q
-    axes[0, 1].hist(Q1, bins=50, alpha=0.6, label=state1)
-    axes[0, 1].hist(Q2, bins=50, alpha=0.6, label=state2)
+    axes[0, 1].hist(Q, bins=bins, alpha=0.7)
     axes[0, 1].set_title("Histogram — Q")
-    axes[0, 1].legend()
 
-    # CDF I
-    axes[1, 0].plot(np.sort(I1), np.linspace(0, 1, len(I1)))
-    axes[1, 0].plot(np.sort(I2), np.linspace(0, 1, len(I2)))
+    axes[1, 0].plot(np.sort(I), np.linspace(0, 1, len(I)))
     axes[1, 0].set_title("CDF — I")
 
-    # CDF Q
-    axes[1, 1].plot(np.sort(Q1), np.linspace(0, 1, len(Q1)))
-    axes[1, 1].plot(np.sort(Q2), np.linspace(0, 1, len(Q2)))
+    axes[1, 1].plot(np.sort(Q), np.linspace(0, 1, len(Q)))
     axes[1, 1].set_title("CDF — Q")
 
-    fig.suptitle(f"Statistics — Qubit {qubit_index + 1}")
+    fig.suptitle(f"Qubit {qubit+1}, Shot {shot}")
     plt.tight_layout()
     plt.show()

@@ -1,28 +1,24 @@
 import matplotlib.pyplot as plt
+from raw_data.iq_container import RawIQData
+from preprocessing.utils import get_complex_iq
 
-# -----------------------------------------------------------
-# IQ scatter comparison
-# -----------------------------------------------------------
-def plot_iq_scatter(samples1, samples2,
-                    state1, state2,
-                    qubit_index,
-                    ax=None):
 
-    I1, Q1 = samples1.real, samples1.imag
-    I2, Q2 = samples2.real, samples2.imag
+def plot_iq_scatter(
+    raw: RawIQData,
+    shot: int = 0,
+    qubit: int = 0,
+    max_points: int = 500,
+):
+    """
+    Scatter plot of IQ samples for one qubit and one shot.
+    """
+    samples = get_complex_iq(raw, shot, qubit, max_points)
 
-    if ax is None:
-        fig, ax = plt.subplots(figsize=(4, 4))
-
-    ax.scatter(I1, Q1, s=10, alpha=0.4, label=state1)
-    ax.scatter(I2, Q2, s=10, alpha=0.4, label=state2)
-
-    ax.set_xlabel("I")
-    ax.set_ylabel("Q")
-    ax.set_title(f"IQ Scatter — Qubit {qubit_index + 1}")
-    ax.grid(True)
-    ax.legend()
-
-    if ax is None:
-        plt.tight_layout()
-        plt.show()
+    plt.figure(figsize=(4, 4))
+    plt.scatter(samples.real, samples.imag, s=10, alpha=0.6)
+    plt.xlabel("I")
+    plt.ylabel("Q")
+    plt.title(f"IQ Scatter — Shot {shot}, Qubit {qubit+1}")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
