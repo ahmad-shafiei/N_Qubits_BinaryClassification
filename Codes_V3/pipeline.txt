@@ -1,0 +1,71 @@
+Raw IQ Traces
+     │
+     ▼
+[Data Loader]
+     │
+     ▼
+[Preprocessing]
+     │
+     ▼
+[Feature Engineering]
+     │
+     ▼
+[Multi-Qubit Model]
+     │
+     ▼
+[Decision & Post-Processing]
+     │
+     ▼
+[Evaluation & Logging]
+
+
+
+pipeline/
+ ├── data/
+ ├── preprocessing/
+ ├── features/
+ ├── models/
+ ├── evaluation/
+ └── runner/
+
+
+├───Codes_V3
+│   ├───demo
+│   │   └── demo.ipynb   <-- نوت‌بوک جدید    
+│   ├───preprocessing
+│   │   ├───plotting
+│   │   │   └───__pycache__
+│   │   │   ├──── __init__.py  
+│   │   │   ├── iq_scatter.py
+│   │   │   ├── histograms.py
+│   │   │   └── gaussian_ellipses.py
+│   │   └───__pycache__
+│   │   ├──── __init__.py
+│   │   ├── data_cleaning.py       # حذف نویزها، NaN و خطاها
+│   │   ├── normalization.py       # نرمال‌سازی داده‌ها (min-max, z-score, ...)
+│   │   ├── resampling.py          # کوتاه کردن یا تغییر نرخ نمونه‌ها
+│   │   ├── filters.py             # فیلترهای پیشرفته (low-pass, smoothing)
+│   │   └── utils.py
+│   │ 
+│   ├───raw_data
+│   │   ├───experiments
+│   │   │   └───4qubit_run01
+│   │   │        └── 16 file .txt
+│   │   ├───loaders
+│   │   │   └───__pycache__
+│   │   │   ├── __init__.py
+│   │   │   └── loader_txt.py  <-
+│   │   │   └── hdf5_loader.py
+│   │   │   └── npy_loader.py
+│   │   │   └── simulator_loader.py
+│   │   └───__pycache__
+│   │   ├── __init__.py       
+│   │   ├── data_source.py
+│   │   ├── iq_container.py
+│   │   └── iq_schema.py
+│   │ 
+│   ├─── features/
+│   ├─── models/
+│   ├─── evaluation/
+│   ├─── runner/ 
+│   └── setup.py   <-
