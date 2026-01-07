@@ -5,7 +5,7 @@ import numpy as np
 from raw_data.iq_container import RawIQData
 
 
-class FeatureExtractor(ABC):
+class BaseFeature(ABC):
     """
     Base class for all feature extractors.
     """
