@@ -1,0 +1,11 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{qiskit}\PYG{n+nn}{.}\PYG{n+nn}{quantum\PYGZus{}info}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{Operator}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{numpy}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{np}
+
+\PYG{c+c1}{\PYGZsh{} M Operator: combine subject\PYGZhy{}verb}
+\PYG{n}{M} \PYG{o}{=} \PYG{n}{Operator}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{n}{j} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{4}\PYG{p}{)}\PYG{p}{]}\PYG{p}{]}\PYG{p}{)}
+
+\PYG{n}{operator} \PYG{n}{B} \PYG{p}{:} \PYG{n}{Combine} \PYG{n}{verb}\PYG{o}{\PYGZhy{}}\PYG{n+nb}{object}
+\PYG{n}{B} \PYG{o}{=} \PYG{n}{Operator}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{n}{j} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{6}\PYG{p}{)}\PYG{p}{]}\PYG{p}{]}\PYG{p}{)}
+\end{MintedVerbatim}

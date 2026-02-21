@@ -1,0 +1,11 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{qiskit}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{QuantumCircuit}
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{qiskit}\PYG{n+nn}{.}\PYG{n+nn}{quantum\PYGZus{}info}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{random\PYGZus{}unitary}
+
+\PYG{n}{U} \PYG{o}{=} \PYG{n}{random\PYGZus{}unitary}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{)}     \PYG{c+c1}{\PYGZsh{} operator on 2 qubits}
+\PYG{n}{qc} \PYG{o}{=} \PYG{n}{QuantumCircuit}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n}{qc}\PYG{o}{.}\PYG{n}{unitary}\PYG{p}{(}\PYG{n}{U}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}           \PYG{c+c1}{\PYGZsh{} forward evolution}
+\PYG{n}{qc}\PYG{o}{.}\PYG{n}{barrier}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{qc}\PYG{o}{.}\PYG{n}{unitary}\PYG{p}{(}\PYG{n}{U}\PYG{o}{.}\PYG{n}{adjoint}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} time inverted evolution}
+\PYG{n}{qc}\PYG{o}{.}\PYG{n}{draw}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{mpl}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{MintedVerbatim}

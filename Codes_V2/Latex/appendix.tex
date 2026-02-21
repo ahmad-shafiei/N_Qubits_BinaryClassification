@@ -1,0 +1,47 @@
+\appendix
+\section*{ضمیمه A: شبیه‌سازی پروتکل‌های معکوس زمانی با Qiskit}
+\label{sec:qiskit-appendix}
+
+در این بخش نشان داده می‌شود که پروتکل‌های معکوس زمانی مورد استفاده در پژوهش حاضر را می‌توان به‌صورت عددی در محیط \lr{Qiskit} شبیه‌سازی کرد. این شبیه‌سازی به پژوهشگران اجازه می‌دهد تا پویایی همبستگی‌های خارج از ترتیب زمانی را در سامانه‌های کوچک بررسی و تحلیل کنند.
+در این رویکرد، دو بلوک زمانی متناظر با تکامل روبه‌جلو و معکوس زمان به‌صورت زیر تعریف می‌شوند:
+\begin{center}
+	\begin{LTR}
+		\begin{minted}[frame=lines,bgcolor=gray!10,fontsize=\scriptsize,linenos=false]{python}
+from qiskit import QuantumCircuit
+from qiskit.quantum_info import random_unitary
+
+U = random_unitary(4)     # operator on 2 qubits
+qc = QuantumCircuit(2)
+qc.unitary(U, [0, 1])           # forward evolution
+qc.barrier()
+qc.unitary(U.adjoint(), [0, 1]) # time inverted evolution
+qc.draw('mpl')
+\end{minted}
+\end{LTR}
+\end{center}
+ماژول \lr{qiskit-dynamics} امکان تعریف همیلتونی و محاسبه‌ی مستقیم اپراتور \( U(t)=e^{-iHt} \) را فراهم می‌کند.  
+در ادامه می‌توان مقادیر انتظاری OTOC را به‌صورت عددی محاسبه کرد:
+\begin{center}
+	\begin{LTR}
+		\begin{minted}[frame=lines,bgcolor=gray!10,fontsize=\scriptsize,linenos=false]{python}
+from qiskit.quantum_info import Statevector, Pauli
+
+psi0 = Statevector.from_label('00')
+M = Pauli('Z')
+U_t = U
+U_t_dag = U_t.adjoint()
+# calculate  ⟨M(t) M⟩ as simple OTOC: 
+psi_t = psi0.evolve(U_t)
+otoc = psi_t.expectation_value(M)
+\end{minted}
+\end{LTR}
+\end{center}
+
+به‌کمک این ابزارها می‌توان:
+\begin{itemize}
+	\item تأثیر اپراتورهای پائولی تصادفی درج‌شده در میانه‌ی تکامل را بررسی کرد؛
+	\item وابستگی OTOC به زمان یا پارامترهای همیلتونی را مطالعه نمود؛
+	\item و حتی رفتار تداخل‌های چندمسیره‌ی مشابه با نتایج مقاله را در مقیاس‌های کوچک بازسازی کرد.
+\end{itemize}
+
+این روش شبیه‌سازی می‌تواند در حوزه‌ی \lr{QNLP} نیز مورد استفاده قرار گیرد؛ به‌گونه‌ای که مدارهای زبانی \lr{lambeq} با افزودن بلوک‌های معکوس زمانی، برای تحلیل \textbf{تداخل‌های زمانی–معنایی} در جمله‌ها به‌کار روند. این کار راهی نو برای بررسی پویایی معنای کوانتومی در گذر از ساختارهای نحوی مختلف فراهم می‌سازد.

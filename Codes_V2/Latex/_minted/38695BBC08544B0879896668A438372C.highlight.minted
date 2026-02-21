@@ -1,0 +1,11 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{lambeq}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{BobcatParser}\PYG{p}{,} \PYG{n}{Rewriter}
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{discopy}\PYG{n+nn}{.}\PYG{n+nn}{quantum}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{Circuit}
+
+\PYG{c+c1}{\PYGZsh{} sentece parser}
+\PYG{n}{parser} \PYG{o}{=} \PYG{n}{BobcatParser}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{diagram} \PYG{o}{=} \PYG{n}{parser}\PYG{o}{.}\PYG{n}{sentence2diagram}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Alice loves Bob}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{}Convert to Quantum circiut}
+\PYG{n}{circuit} \PYG{o}{=} \PYG{n}{diagram}\PYG{o}{.}\PYG{n}{to\PYGZus{}pennylane}\PYG{p}{(}\PYG{p}{)}
+\end{MintedVerbatim}
