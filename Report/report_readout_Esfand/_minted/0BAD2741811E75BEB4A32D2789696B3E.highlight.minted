@@ -1,0 +1,19 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{qiskit}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{QuantumCircuit}
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{qiskit}\PYG{n+nn}{.}\PYG{n+nn}{quantum\PYGZus{}info}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{Statevector}
+
+\PYG{c+c1}{\PYGZsh{} initial state of sentence}
+\PYG{n}{psi\PYGZus{}0} \PYG{o}{=} \PYG{n}{Statevector}\PYG{o}{.}\PYG{n}{from\PYGZus{}label}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{0}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{n\PYGZus{}qubits}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} symantic evolution}
+\PYG{n}{U} \PYG{o}{=} \PYG{n}{circuit}\PYG{o}{.}\PYG{n}{to\PYGZus{}instruction}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{psi\PYGZus{}t} \PYG{o}{=} \PYG{n}{psi\PYGZus{}0}\PYG{o}{.}\PYG{n}{evolve}\PYG{p}{(}\PYG{n}{U}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} L\PYGZhy{}TOC calculation}
+\PYG{n}{M\PYGZus{}t} \PYG{o}{=} \PYG{n}{U}\PYG{o}{.}\PYG{n}{adjoint}\PYG{p}{(}\PYG{p}{)} \PYG{o}{@} \PYG{n}{M} \PYG{o}{@} \PYG{n}{U}
+\PYG{n}{L\PYGZus{}TOC} \PYG{o}{=} \PYG{n}{psi\PYGZus{}t}\PYG{o}{.}\PYG{n}{expectation\PYGZus{}value}\PYG{p}{(}\PYG{n}{M} \PYG{o}{@} \PYG{n}{M\PYGZus{}t}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} L\PYGZhy{}OTOC(2) Calculation}
+\PYG{n}{B\PYGZus{}t} \PYG{o}{=} \PYG{n}{U}\PYG{o}{.}\PYG{n}{adjoint}\PYG{p}{(}\PYG{p}{)} \PYG{o}{@} \PYG{n}{B} \PYG{o}{@} \PYG{n}{U}
+\PYG{n}{L\PYGZus{}OTOC2} \PYG{o}{=} \PYG{n}{psi\PYGZus{}t}\PYG{o}{.}\PYG{n}{expectation\PYGZus{}value}\PYG{p}{(}\PYG{n}{M\PYGZus{}t} \PYG{o}{@} \PYG{n}{B} \PYG{o}{@} \PYG{n}{M} \PYG{o}{@} \PYG{n}{B\PYGZus{}t}\PYG{p}{)}
+\end{MintedVerbatim}
