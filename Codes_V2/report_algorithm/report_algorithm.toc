@@ -1,0 +1,21 @@
+\contentsline {chapter}{\numberline {1}کاهش خطای خوانش کیوبیت با استفاده از یادگیری ماشین}{1}{chapter.0.1}%
+\contentsline {section}{\numberline {1.1}مقدمه}{2}{section.0.1.1}%
+\contentsline {section}{\numberline {1.2}ساختار داده‌ها}{2}{section.0.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}بارگذاری و سازماندهی داده}{2}{subsection.0.1.2.1}%
+\contentsline {section}{\numberline {1.3}تحلیل آماری اولیه}{3}{section.0.1.3}%
+\contentsline {section}{\numberline {1.4}مهندسی ویژگی و پیش‌پردازش}{4}{section.0.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}نمایش حقیقی-موهومی}{4}{subsection.0.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}نمایش دامنه-فاز}{4}{subsection.0.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}نرمال‌سازی داده‌ها}{5}{subsection.0.1.4.3}%
+\contentsline {section}{\numberline {1.5}تحلیل جدایش‌پذیری تک‌کیوبیتی}{5}{section.0.1.5}%
+\contentsline {section}{\numberline {1.6}مدل‌سازی با \lr {SVM}}{5}{section.0.1.6}%
+\contentsline {subsection}{\numberline {1.6.1}کرنل‌های استاندارد}{6}{subsection.0.1.6.1}%
+\contentsline {subsection}{\numberline {1.6.2}کرنل الهام‌گرفته از کوانتوم}{6}{subsection.0.1.6.2}%
+\contentsline {section}{\numberline {1.7}تحلیل وابستگی بین کیوبیت‌ها}{6}{section.0.1.7}%
+\contentsline {section}{\numberline {1.8}مدل گاوسی بیزی (\lr {QDA})}{7}{section.0.1.8}%
+\contentsline {section}{\numberline {1.9}مدل مخلوط گاوسی (\lr {GMM})}{7}{section.0.1.9}%
+\contentsline {section}{\numberline {1.10}بحث و تحلیل نهایی}{8}{section.0.1.10}%
+\contentsline {section}{\numberline {1.11}مسیرهای پیشنهادی}{8}{section.0.1.11}%
+\contentsline {subsection}{\numberline {1.11.1}بهبودهای فیزیکی}{8}{subsection.0.1.11.1}%
+\contentsline {subsection}{\numberline {1.11.2}بهبودهای الگوریتمی}{8}{subsection.0.1.11.2}%
+\contentsline {section}{\numberline {1.12}جمع‌بندی}{8}{section.0.1.12}%

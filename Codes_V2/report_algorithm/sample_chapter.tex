@@ -1,0 +1,23 @@
+\chapter{عنوان پروژه}
+یک پروژه در یک فصل نوشته می‌شود و چندین بخش دارد.
+
+\section{کدها}
+اگر پروژه شامل کد است، کدها را در پوشه‌ی \lr{codes} قرار داده و سپس به صورت زیر کد خود را در لتک قرار دهید:
+\code{python}{codes/example.py}{}
+
+اگر کد در قالب جوپیتر نوتبوک است، ابتدا در جوپیتر نوتبوک خروجی لتک بگیرید سپس فایل لتک را در یک فولدر دلخواه در پوشه‌ی \lr{latex\_chapters} قرار دهید. فایل را کامپایل کنید و pdf نهایی کد را به صورت زیر در متن قرار دهید:
+\includepdf[pages=-]{jupyter_codes/code_sample_project/code_project_1.pdf}
+
+\section{تصاویر}
+برای وارد کردن تصویر، تصاویر را در پوشه‌ی \lr{figs} قرار دهید. سپس به صورت زیر تصاویر را وارد کنید:
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{figs/sample.png}
+	\caption{کپشن}
+	\label{fig1}
+\end{figure}
+
+
+\section{مراجع}
+\lr{bibtex}
+مراجع را در \lr{bibs/refs.bib} وارد کنید و سپس به این صورت ارجاع دهید: \cite{kqlstm}.

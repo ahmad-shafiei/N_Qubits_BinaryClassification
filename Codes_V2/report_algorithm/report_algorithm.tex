@@ -1,0 +1,36 @@
+\documentclass[oneside,a4paper,12pt]{book}
+
+\input{styles/common.tex}
+
+\begin{document}
+
+% -------------------- Front Page --------------------
+
+\include{front/template/title}
+
+% -------------------- Table of Contents --------------------
+
+\pagenumbering{Alph}
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+% -------------------- Chapters --------------------
+
+\pagenumbering{arabic}
+%\include{sample_chapter}
+%\include{project1}
+\include{project2}
+% -------------- Bibliography & Dictionary ---------------
+
+\include{bibs/bibs}
+
+% -------------------- Appendices --------------------
+
+%\begin{appendix}
+%	\include{chapters/appendix}
+%\end{appendix}
+
+% -------------------- The End! --------------------
+
+\end{document}
