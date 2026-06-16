@@ -1,4 +1,4 @@
-\chapter{گزارش فنی پروژه نویز خوانش چهار کیوبیتی}
+\chapter*{گزارش فنی پروژه نویز خوانش چهار کیوبیتی}
 
 \section{هدف و تصویر کلی}
 
@@ -16,6 +16,54 @@
 	\label{eq:assignment-convention}
 \end{equation}
 تعریف شده است. بنابراین سطرها حالت آماده‌سازی و ستون‌ها حالت اندازه‌گیری هستند و هر سطر جمع یک دارد. این همان قرارداد مورد استفاده در \lr{Qiskit ReadoutError} است.
+
+\section{معماری کلی خط لوله پروژه}
+
+پروژه یک مسیر پیوسته از داده خام تا ارزیابی mitigation دارد. شکل~\ref{fig:pipeline} این مسیر را به صورت یک سیستم واحد نشان می‌دهد؛ نه چند آزمایش جدا.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[
+	node distance=8mm and 10mm,
+	box/.style={draw, rounded corners, align=center, minimum width=3.2cm, minimum height=1.0cm, fill=blue!6},
+	small/.style={draw, rounded corners, align=center, minimum width=2.8cm, minimum height=0.9cm, fill=orange!8},
+	metric/.style={draw, rounded corners, align=center, minimum width=2.6cm, minimum height=0.9cm, fill=green!8},
+	arrow/.style={-{Stealth[length=2.2mm]}, thick}
+]
+\node[box] (iq) {داده تجربی \lr{IQ}\\ \lr{16} حالت $\times$ \lr{1000} shot};
+\node[box, below=of iq] (lda) {طبقه‌بندی \lr{IQ}\\ \lr{LDA}};
+\node[box, below=of lda] (a2) {ماتریس‌های $2\times2$\\ تک‌کیوبیتی};
+\node[box, below=of a2] (a16) {ماتریس همبسته\\ $16\times16$};
+\node[box, right=18mm of a16] (sim) {شبیه‌سازی مدار\\ \lr{Qiskit Aer}};
+\node[small, above=of sim] (ideal) {$\mathbf{p}_{\mathrm{ideal}}$};
+\node[small, below=of sim] (noisy) {$\mathbf{p}_{\mathrm{noisy}}$};
+\node[box, right=18mm of sim] (mlp) {مدل \lr{MLP}\\ mitigation};
+\node[small, right=18mm of mlp] (out) {$\hat{\mathbf{p}}_{\mathrm{ideal}}$};
+\node[metric, below=14mm of out] (eval) {Fidelity / KL / L1};
+
+\draw[arrow] (iq) -- (lda);
+\draw[arrow] (lda) -- (a2);
+\draw[arrow] (a2) -- (a16);
+\draw[arrow] (a16.east) -- ++(6mm,0) |- (sim.west);
+\draw[arrow] (sim) -- (ideal);
+\draw[arrow] (sim) -- (noisy);
+\draw[arrow] (ideal.east) -| (mlp.north);
+\draw[arrow] (noisy.east) -- (mlp.west);
+\draw[arrow] (mlp) -- (out);
+\draw[arrow] (out) -- (eval);
+\end{tikzpicture}%
+}
+\caption{معماری کلی خط لوله: از داده \lr{IQ} تا استخراج ماتریس نویز، تولید توزیع ایده‌آل/نویزی، mitigation با \lr{MLP} و ارزیابی.}
+\label{fig:pipeline}
+\end{figure}
+
+\textbf{دو شاخه اصلی:}
+\begin{enumerate}
+	\item \textbf{شاخه کالیبراسیون:} داده \lr{IQ} $\rightarrow$ \lr{LDA} $\rightarrow$ ماتریس‌های نویز؛
+	\item \textbf{شاخه mitigation:} مدار کوانتومی $\rightarrow$ $\mathbf{p}_{\mathrm{ideal}}$ و $\mathbf{p}_{\mathrm{noisy}}$ $\rightarrow$ \lr{MLP} $\rightarrow$ $\hat{\mathbf{p}}_{\mathrm{ideal}}$.
+\end{enumerate}
+شاخه اول «مدل نویز سخت‌افزار» را می‌سازد؛ شاخه دوم از آن برای تولید دیتاست و ارزیابی استفاده می‌کند.
 
 \section{داده‌های تجربی \lr{IQ}}
 
@@ -135,6 +183,36 @@
 \]
 بوده است. این عدد نشان می‌دهد خوانش چهارکیوبیتی دقیقاً به همان حالت آماده‌شده، به دلیل ضرب خطاهای چند کیوبیت و همبستگی‌ها، fidelity نسبتاً پایینی دارد.
 
+\subsection{اعتبارسنجی ماتریس‌های نویز}
+
+استخراج ماتریس کافی نیست؛ باید مطمئن شویم خروجی یک \emph{کانال احتمال معتبر} است. در غیر این صورت نمی‌توان آن را در شبیه‌سازی یا mitigation استفاده کرد.
+
+\textbf{بررسی‌های اصلی:}
+\begin{align}
+	A_{ij} &\ge 0 && \text{(غیرمنفی بودن)} \label{eq:val-nonneg}\\
+	\sum_{j} A_{ij} &= 1 && \text{(نرمال‌سازی سطری)} \label{eq:val-row}\\
+	\bar{A}_{ii} &= \frac{1}{16}\sum_i A_{ii} && \text{(رفتار قطری)} \label{eq:val-diag}\\
+	M &\neq A^{(1)}\otimes A^{(2)}\otimes A^{(3)}\otimes A^{(4)} && \text{(عدم استقلال)} \label{eq:val-kron}
+\end{align}
+
+\begin{table}[htbp]
+\centering
+\caption{چک‌لیست اعتبارسنجی ماتریس نویز}
+\label{tab:matrix-validation}
+\begin{tabular}{lll}
+\toprule
+بررسی & شرط & معنی فیزیکی \\
+\midrule
+غیرمنفی & $A_{ij}\ge0$ & احتمال منفی معنا ندارد \\
+نرمال‌سازی & $\sum_j A_{ij}=1$ & هر حالت آماده به توزیع کامل می‌رود \\
+قطری & $\bar{A}_{ii}\approx0.39$ & میانگین fidelity خوانش \\
+مقایسه & $M\neq M_{\mathrm{indep}}$ & وجود crosstalk / correlation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+این اعتبارسنجی تضمین می‌کند ماتریس استخراج‌شده را می‌توان مستقیماً به عنوان کانال readout در تولید $\mathbf{p}_{\mathrm{noisy}}$ استفاده کرد. اگر قرارداد سطری \lr{Qiskit} رعایت نشود یا ordering بیت‌ها جابه‌جا شود، ماتریس از نظر ریاضی stochastic به نظر می‌رسد اما فیزیکاً اشتباه خواهد بود.
+
 \subsection{چرا ماتریس $16\times16$ برابر کرونکر چهار ماتریس $2\times2$ نیست؟}
 
 اگر خطای خوانش چهار کیوبیت کاملاً مستقل بود، ماتریس کامل از کرونکر محصول ماتریس‌های تک‌کیوبیتی به دست می‌آمد:
@@ -164,7 +242,7 @@
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{independent_circuit.png}
+\includegraphics[width=0.7\textwidth]{independent_circuit.png}
 \caption{مدار مستقل شامل چهار گیت $R_y(\theta_i)$ و اندازه‌گیری نهایی. این مدار درهم‌تنیدگی ایجاد نمی‌کند و توزیع خروجی آن فاکتورسازی‌شده است.}
 \label{fig:independent-circuit}
 \end{figure}
@@ -250,7 +328,38 @@ noise_model.add_readout_error(readout_error, [q])
 \end{equation}
 این رابطه دقیقاً با قرارداد سطری ماتریس سازگار است: هر مؤلفه ایده‌آل $p_i$ بین خروجی‌های اندازه‌گیری $j$ طبق سطر $M_{ij}$ پخش می‌شود.
 
-\section{تولید دیتاست و مدل یادگیری ماشین}
+\section{تولید دیتاست، استراتژی آزمایش و مدل یادگیری ماشین}
+
+\subsection{استراتژی طراحی دیتاست‌ها}
+
+ساختار پوشه‌های \lr{DataTrain} فقط یک سازماندهی فایل نیست؛ پشت آن یک منطق آزمایشی مشخص قرار دارد. هدف صرفاً \emph{interpolation} روی یک مدار و یک نویز نبود، بلکه بررسی \textbf{generalization} نسبت به تغییر مدار و تغییر کانال نویز نیز مدنظر بود.
+
+\begin{table}[htbp]
+\centering
+\caption{منطق طراحی دیتاست در فازهای مختلف}
+\label{tab:dataset-strategy}
+\small
+\begin{tabular}{p{2.2cm}p{3.2cm}p{3.2cm}p{4.5cm}}
+\toprule
+فاز & Train & Validation & Test \\
+\midrule
+0 & --- & --- & \lr{Independent} $\times$ ۳ نویز \\
+1 & \lr{Ind. + Synthetic} & \lr{Ind. + Synthetic} & \lr{Ind.} $\times$ ۳ نویز \\
+2\_0 & \lr{Ind. + Exp. Single} & \lr{Ind. + Exp. Single} & \lr{Ind.} $\times$ ۳ نویز \\
+2\_1 & \lr{Ind. + Exp. Corr.} & \lr{Ind. + Exp. Corr.} & \lr{Ind.} $\times$ ۳ نویز \\
+3\_0 & \lr{ZZ + Synthetic} & \lr{ZZ + Synthetic} & \lr{ZZ} $\times$ ۳ نویز \\
+3\_1 & \lr{ZZ + Exp. Single} & \lr{ZZ + Exp. Single} & \lr{Ind.} یا \lr{ZZ} $\times$ ۳ نویز \\
+3\_2 & \lr{ZZ + Exp. Corr.} & \lr{ZZ + Exp. Corr.} & \lr{ZZ} $\times$ ۳ نویز \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{سه سطح تعمیم‌پذیری:}
+\begin{enumerate}
+	\item \textbf{همان مدار، همان نویز} (قطری جدول نتایج): بهترین عملکرد؛
+	\item \textbf{همان مدار، نویز متفاوت}: سنجش robustness کانال نویز؛
+	\item \textbf{مدار متفاوت، نویز متفاوت}: سخت‌ترین حالت generalization.
+\end{enumerate}
 
 \subsection{خط لوله تولید دیتاست}
 
@@ -282,21 +391,30 @@ DataTrain/
 \end{latin}
 ذخیره می‌شوند. در اجرای اصلی، اندازه‌ها برای train، validation و test به ترتیب ۴۵۰۰، ۱۵۰۰ و ۱۵۰۰ نمونه بوده است.
 
-\subsection{مدل \lr{MLP}}
+\subsection{نقش مدل \lr{MLP}: تقریب کانال معکوس}
 
 مدل یادگیری ماشین یک شبکه کاملاً متصل است:
 \[
 	16 \rightarrow 128 \rightarrow 256 \rightarrow 128 \rightarrow 16.
 \]
-لایه خروجی \lr{Softmax} دارد تا خروجی مدل یک بردار احتمال معتبر باشد. وظیفه مدل این است که نگاشت
-\[
-	f_\theta:\mathbf{p}_{\mathrm{noisy}}\mapsto \hat{\mathbf{p}}_{\mathrm{ideal}}
-\]
-را یاد بگیرد. بنابراین این مدل یک ابزار \lr{readout error mitigation} است، نه یک طبقه‌بند حالت.
+لایه خروجی \lr{Softmax} دارد تا $\hat{\mathbf{p}}$ یک بردار احتمال معتبر باشد.
 
-آموزش عمدتاً با \lr{Adam}، نرخ یادگیری $10^{-3}$، batch size برابر ۶۴ و حدود ۵۱ epoch انجام شده است. تابع زیان اصلی \lr{KLDivLoss} است، چون هدف نزدیک کردن دو توزیع احتمال است. در یکی از فازها از \lr{MSELoss} نیز استفاده شده است.
+\textbf{مدل \lr{MLP} چیست و چه نیست:}
+\begin{itemize}
+	\item \textbf{نیست} classifier حالت $|s\rangle$؛
+	\item \textbf{نیست} state discriminator روی \lr{IQ}؛
+	\item \textbf{است} تقریب غیرخطی از \emph{inverse readout channel}:
+	\[
+		f_\theta \approx \mathcal{M}^{-1}, \qquad
+		\hat{\mathbf{p}}_{\mathrm{ideal}} = f_\theta(\mathbf{p}_{\mathrm{noisy}}).
+	\]
+\end{itemize}
 
-\section{معیار fidelity}
+مدل $M^{-1}$ را به‌صورت صریح محاسبه نمی‌کند (ماتریس $16\times16$ لزوماً معکوس‌پذیر نیست). در عوض، یک نگاشت غیرخطی $\mathbb{R}^{16}\!\to\!\mathbb{R}^{16}$ یاد می‌گیرد که توزیع نویزی را به توزیع ایده‌آل نزدیک کند. از نظر علمی، این \lr{learned readout error mitigation} است.
+
+آموزش با \lr{Adam} ($\text{lr}=10^{-3}$)، batch size ۶۴ و حدود ۵۱ epoch انجام شده است. زیان اصلی \lr{KLDivLoss} است؛ در فاز \lr{3\_2} از \lr{MSELoss} نیز استفاده شده است.
+
+\section{معیار fidelity و baselineها}
 
 \subsection{تعریف و تفسیر}
 
@@ -328,7 +446,134 @@ accuracy فقط می‌گوید بیشینه احتمال یا برچسب نها
 \end{align}
 \lr{KL} برای آموزش مناسب است، اما fidelity برای گزارش نهایی خواناتر و bounded در بازه $[0,1]$ است.
 
-\section{نتایج و تحلیل}
+\subsection{سه حالت مقایسه در ارزیابی}
+
+هدف پروژه «بالا بردن fidelity به هر قیمتی» نیست؛ هدف \textbf{کاهش اثر نویز خوانش} است. سه حالت زیر همیشه باید با هم مقایسه شوند:
+
+\begin{align}
+\text{حالت ۱ — بدون mitigation:}\quad
+& F_{\mathrm{raw}} = F(\mathbf{p}_{\mathrm{ideal}}, \mathbf{p}_{\mathrm{noisy}})
+\label{eq:f-raw}\\
+\text{حالت ۲ — پس از MLP:}\quad
+& F_{\mathrm{MLP}} = F(\mathbf{p}_{\mathrm{ideal}}, \hat{\mathbf{p}})
+\label{eq:f-mlp}\\
+\text{حالت ۳ — بهبود:}\quad
+& \Delta F = F_{\mathrm{MLP}} - F_{\mathrm{raw}}
+\label{eq:delta-f}
+\end{align}
+
+اگر $F_{\mathrm{raw}}$ از ابتدا نزدیک ۱ باشد (مثلاً $0.972$ در \lr{ZZFeatureMap} اولیه)، $\Delta F$ کوچک لزوماً به معنای مدل ضعیف نیست؛ ممکن است نویز از ابتدا کم‌اثر بوده باشد. بنابراین همیشه باید baseline خام و بهبود نسبی را با هم گزارش کرد.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.38]
+\foreach \i/\h in {0/0.35,1/0.08,2/0.06,3/0.03,4/0.05,5/0.02,6/0.02,7/0.01,
+8/0.12,9/0.04,10/0.03,11/0.02,12/0.08,13/0.03,14/0.05,15/0.03}
+	\fill[green!55!black] (\i,0) rectangle (\i+0.75,\h);
+\end{tikzpicture}\\
+\small Ideal $\mathbf{p}_{\mathrm{ideal}}$
+\end{minipage}\hfill
+\begin{minipage}{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.38]
+\foreach \i/\h in {0/0.22,1/0.10,2/0.08,3/0.05,4/0.07,5/0.04,6/0.04,7/0.03,
+8/0.11,9/0.06,10/0.05,11/0.04,12/0.09,13/0.05,14/0.07,15/0.05}
+	\fill[red!70!black] (\i,0) rectangle (\i+0.75,\h);
+\end{tikzpicture}\\
+\small Noisy $\mathbf{p}_{\mathrm{noisy}}$
+\end{minipage}\hfill
+\begin{minipage}{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.38]
+\foreach \i/\h in {0/0.32,1/0.085,2/0.065,3/0.035,4/0.055,5/0.025,6/0.025,7/0.015,
+8/0.115,9/0.045,10/0.035,11/0.025,12/0.085,13/0.035,14/0.055,15/0.035}
+	\fill[blue!60!black] (\i,0) rectangle (\i+0.75,\h);
+\end{tikzpicture}\\
+\small MLP $\hat{\mathbf{p}}$
+\end{minipage}
+\caption{نمایش مفهومی بازسازی توزیع: ایده‌آل (چپ)، نویزی (وسط)، خروجی \lr{MLP} (راست). هدف mitigation بازگرداندن شکل توزیع است، نه فقط بیشینه احتمال.}
+\label{fig:dist-reconstruction}
+\end{figure}
+
+شکل~\ref{fig:dist-reconstruction} نشان می‌دهد چرا fidelity معیار مناسب‌تری از accuracy است: حتی اگر argmax یکسان بماند، توزیع کامل تغییر کرده و mitigation باید این تغییر را جبران کند.
+
+\section{چالش‌ها، اصلاحات و نتایج}
+
+\subsection{چالش‌های پروژه و راه‌حل‌ها}
+
+پروژه فقط اجرای کد نبود؛ چند مشکل فنی در مسیر حل شد:
+
+\begin{table}[htbp]
+\centering
+\caption{چالش‌های اصلی و اصلاحات انجام‌شده}
+\label{tab:challenges}
+\small
+\begin{tabular}{p{3.2cm}p{5.2cm}p{4.8cm}}
+\toprule
+چالش & مشکل & راه‌حل \\
+\midrule
+ترتیب بیت‌ها & جابه‌جایی سطر/ستون $M$ & یکسان‌سازی \lr{bits\_to\_int} در همه بخش‌ها \\
+قرارداد \lr{Qiskit} & transpose اشتباه ماتریس & $A_{ij}=P(m=j|p=i)$، اعمال $\mathbf{p}M$ \\
+ماتریس $16\times16$ & \lr{Aer} کانال همبسته کامل ندارد & \lr{apply\_correlated\_readout\_noise} \\
+\lr{ZZFeatureMap} یکنواخت & $F_{\mathrm{raw}}\approx0.972$، نویز کم‌اثر & افزایش \lr{reps} به ۲ \\
+نویز train/test & عملکرد بدتر از baseline & آموزش روی نویز متناسب با سخت‌افزار \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{بررسی چالش یکنواختی \lr{ZZFeatureMap}}
+
+در فرآیند تولید داده برای ارزیابی عملکرد مدل یادگیری، یکی از چالش‌های مهم مربوط به استفاده از مدار
+\lr{ZZFeatureMap}
+مشاهده شد. در مراحل اولیه، داده‌های مربوط به این مدار با پارامترهای تصادفی و تعداد لایه کم
+(\lr{reps=1})
+تولید شدند. بررسی اولیه نشان داد که شباهت بین توزیع ایده‌آل و توزیع نویزی حتی پیش از اعمال مدل یادگیری بسیار زیاد است. به عنوان نمونه، مقدار فیدیلیتی خام بین داده‌های ایده‌آل و نویزی به صورت زیر مشاهده شد:
+
+\begin{equation}
+	F_{\mathrm{raw}} \approx 0.972
+\end{equation}
+
+این مقدار نشان می‌دهد که ورودی مدل (توزیع نویزی) و خروجی هدف (توزیع ایده‌آل) از ابتدا اختلاف بسیار کمی دارند. بنابراین اگر پس از آموزش مدل، مقدار فیدیلیتی بالایی مانند
+$F \approx 0.996$
+مشاهده شود، این نتیجه الزاماً نشان‌دهنده توانایی بالای مدل در یادگیری تصحیح نویز نیست، زیرا بخشی از این عملکرد ناشی از شباهت اولیه داده‌ها است.
+
+بررسی توزیع‌های تولید شده نشان داد که دلیل اصلی این رفتار، ماهیت خروجی مدار
+\lr{ZZFeatureMap}
+با تنظیمات اولیه بود. این مدار در حالت
+$\mathrm{reps}=1$
+برای بسیاری از انتخاب‌های تصادفی پارامترها، توزیع احتمال حالت‌های اندازه‌گیری شده‌ای نزدیک به توزیع یکنواخت ایجاد می‌کند. در چنین شرایطی، اثر نویز خوانش روی توزیع احتمال کاهش پیدا می‌کند، زیرا تغییرات ایجاد شده توسط نویز در مقایسه با توزیع تقریباً یکنواخت بسیار کوچک است.
+
+به بیان دیگر، مسئله اصلی در این مرحله، عدم صحت مدل نویز یا فرآیند اعمال ماتریس نویز نبود؛ بلکه داده‌های تولید شده از مدار، ساختار کافی برای آشکار کردن اثر نویز را نداشتند. در نتیجه مدل یادگیری ماشین عملاً با مسئله‌ای مواجه نبود که نیاز به اصلاح جدی داشته باشد.
+
+برای رفع این مشکل، ساختار مدار تغییر داده شد و با افزایش عمق مدار از طریق افزایش تعداد لایه‌ها
+($\mathrm{reps}=2$)
+تنوع بیشتری در توزیع‌های خروجی ایجاد شد. هدف از این تغییر، ایجاد یک تعادل مناسب بین دو عامل بود:
+
+\begin{itemize}
+	\item وجود ساختار کافی در توزیع احتمال خروجی مدار، به طوری که مدل بتواند الگوهای کوانتومی را یاد بگیرد؛
+	\item ایجاد اختلاف قابل مشاهده بین توزیع ایده‌آل و نویزی، به طوری که اثر نویز خوانش در داده‌ها باقی بماند.
+\end{itemize}
+
+پس از اصلاح مدار، مقدار خلوص توزیع‌های تولید شده افزایش یافت و در عین حال توزیع‌ها از حالت تقریباً یکنواخت خارج شدند. این تغییر باعث شد داده‌های تولید شده برای آموزش و ارزیابی مدل، چالش واقعی‌تری ایجاد کنند و عملکرد مدل در شرایط مختلف نویز قابل تفسیرتر باشد.
+
+لازم به ذکر است که هدف در این پروژه، بیشینه کردن یا کمینه کردن مستقیم معیارهایی مانند
+\lr{Purity}
+یا
+\lr{Fidelity}
+نیست؛ بلکه هدف اصلی ایجاد دیتاست‌هایی است که در آن‌ها:
+\begin{enumerate}
+	\item مدارهای کوانتومی دارای ساختار قابل یادگیری باشند؛
+	\item نویز خوانش بتواند تغییر قابل اندازه‌گیری در توزیع احتمال ایجاد کند؛
+	\item مدل یادگیری مجبور به استخراج نگاشت بین توزیع نویزی و توزیع ایده‌آل باشد.
+\end{enumerate}
+
+بنابراین اصلاح پارامترهای مدار
+\lr{ZZFeatureMap}
+به عنوان یک مرحله ضروری در آماده‌سازی داده انجام شد تا ارزیابی مدل در مراحل بعدی پروژه، بازتاب واقعی‌تری از توانایی مدل در کاهش اثر نویز کوانتومی داشته باشد.
+%===============
+
 
 \subsection{جدول اصلی fidelity}
 
@@ -336,21 +581,21 @@ accuracy فقط می‌گوید بیشینه احتمال یا برچسب نها
 \centering
 \caption{میانگین fidelity روی دیتاست‌های test. سطرها نوع مدار و نویز آموزش، ستون‌ها نویز آزمون هستند.}
 \label{tab:main-fidelity}
-\begin{tabular}{llccc}
+\begin{tabular}{lllll}
 \toprule
-مدار & نویز آموزش & \lr{Synthetic} & \lr{Exp. Single} & \lr{Exp. Correlated}\\
+Circuit & TrainingNoise & Synthetic & Exp. Single & Exp. Correlated\\
 \midrule
-\multirow{4}{*}{\lr{Independent}}
-& بدون آموزش & 0.907 & 0.768 & 0.763\\
-& \lr{Synthetic} & 0.979 & 0.829 & 0.821\\
-& \lr{Exp. Single} & 0.894 & 0.977 & 0.972\\
-& \lr{Exp. Correlated} & 0.874 & 0.958 & 0.971\\
+\multirow{4}{*}{Independent}
+& NoTraining & 0.907 & 0.768 & 0.763\\
+& Synthetic & 0.979 & 0.829 & 0.821\\
+& Exp. Single & 0.894 & 0.977 & 0.972\\
+& Exp. Correlated & 0.874 & 0.958 & 0.971\\
 \midrule
-\multirow{4}{*}{\lr{ZZ FeatureMap}}
-& بدون آموزش & 0.938 & 0.853 & 0.861\\
-& \lr{Synthetic} & 0.972 & 0.892 & 0.900\\
-& \lr{Exp. Single} & 0.848 & 0.934 & 0.942\\
-& \lr{Exp. Correlated} & 0.841 & 0.922 & 0.963\\
+\multirow{4}{*}{ZZ FeatureMap}
+& NoTraining & 0.938 & 0.853 & 0.861\\
+& Synthetic & 0.972 & 0.892 & 0.900\\
+& Exp. Single & 0.848 & 0.934 & 0.942\\
+& Exp. Correlated & 0.841 & 0.922 & 0.963\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -400,6 +645,17 @@ accuracy فقط می‌گوید بیشینه احتمال یا برچسب نها
 
 جدول~\ref{tab:delta-fidelity} نشان می‌دهد بیشترین سود یادگیری ماشین در جایی است که نویز تجربی شدیدتر بوده است. در مدار مستقل، نویز تجربی fidelity را حدود $0.76$ کرده و مدل آن را تا حدود $0.97$ برگردانده است. در مدار \lr{ZZ} baselineها بالاترند، اما مدل همچنان بهبود معنادار ایجاد می‌کند.
 
+\section{محدودیت‌های فعلی پروژه}
+
+\begin{enumerate}
+	\item \textbf{مقیاس:} فقط ۴ کیوبیت بررسی شده؛ برای $n>4$ اندازه ماتریس $2^n\times2^n$ به‌سرعت رشد می‌کند.
+	\item \textbf{وابستگی به کالیبراسیون:} ماتریس‌های نویز snapshot فعلی سخت‌افزار هستند و drift زمانی لحاظ نشده.
+	\item \textbf{generalization محدود:} مدل وقتی train/test از نظر نویز یا مدار mismatch دارند، افت شدید نشان می‌دهد.
+	\item \textbf{تقریب غیرخطی:} \lr{MLP} معکوس دقیق $M$ نیست؛ outside distribution ممکن است ضعیف عمل کند.
+	\item \textbf{نویز فقط readout:} gate error و decoherence در شبیه‌سازی لحاظ نشده‌اند.
+\end{enumerate}
+بیان صریح این محدودیت‌ها اعتبار گزارش را بالا می‌برد و مسیر ادامه کار را روشن می‌کند.
+
 \section{نکات حساس و توصیه‌های عملی}
 
 \begin{enumerate}
@@ -412,8 +668,8 @@ accuracy فقط می‌گوید بیشینه احتمال یا برچسب نها
 
 \section{جمع‌بندی نهایی}
 
-این پروژه یک مسیر کامل و قابل دفاع برای مطالعه نویز خوانش چهار کیوبیتی ساخته است. در بخش اول، داده‌های خام \lr{IQ} با \lr{LDA} به بیت‌های اندازه‌گیری‌شده تبدیل می‌شوند و از آن‌ها ماتریس‌های تخصیص تک‌کیوبیتی و ماتریس همبسته $16\times16$ استخراج می‌شود. شکل ابرهای \lr{IQ} نشان می‌دهد خطای خوانش صرفاً یک خطای مستقل ساده نیست و crosstalk بین کیوبیت‌ها وجود دارد.
+این پروژه یک مسیر کامل و قابل دفاع برای مطالعه نویز خوانش چهار کیوبیتی ساخته است (شکل~\ref{fig:pipeline}). در بخش اول، داده‌های خام \lr{IQ} با \lr{LDA} به بیت‌های اندازه‌گیری‌شده تبدیل می‌شوند و پس از اعتبارسنجی، ماتریس‌های تخصیص تک‌کیوبیتی و ماتریس همبسته $16\times16$ استخراج می‌شود.
 
-در بخش دوم، سه نوع نویز روی دو مدار کوانتومی اعمال می‌شود. مدار \lr{Independent RY} یک benchmark ساده و فاکتورسازی‌شده است، در حالی که \lr{ZZ FeatureMap} با گیت‌های فاز و برهم‌کنش‌های \lr{ZZ} توزیع‌های پیچیده‌تر و همبسته‌تر تولید می‌کند. مدل \lr{MLP} با ورودی $\mathbf{p}_{\mathrm{noisy}}$ و هدف $\mathbf{p}_{\mathrm{ideal}}$ نقش یک ابزار readout mitigation را دارد.
+در بخش دوم، سه نوع نویز روی دو مدار کوانتومی اعمال می‌شود. استراتژی دیتاست طوری طراحی شده که generalization نسبت به مدار و کانال نویز نیز سنجیده شود. مدل \lr{MLP} نقش تقریب کانال معکوس readout را دارد و با fidelity، \lr{KL} و \lr{L1} ارزیابی می‌شود.
 
-نتایج fidelity نشان می‌دهد یادگیری ماشین در حالت هم‌خوانی نویز آموزش و آزمون بسیار مؤثر است، به‌ویژه برای نویزهای تجربی. اما همین نتایج هشدار می‌دهند که آموزش روی نویز نامتناسب می‌تواند عملکرد را بدتر کند. بنابراین برای کاربرد سخت‌افزاری، مهم‌ترین گام، استخراج دقیق ماتریس نویز واقعی و آموزش مدل روی دیتاستی است که همان کانال نویز را بازتاب دهد.
+نتایج نشان می‌دهد mitigation در حالت هم‌خوانی train/test بسیار مؤثر است، به‌ویژه برای نویز تجربی. اما train/test mismatch می‌تواند عملکرد را از baseline پایین‌تر ببرد. برای کاربرد سخت‌افزاری، استفاده از ماتریس همبسته واقعی و طراحی دیتاست متناسب با شرایط آزمون ضروری است.

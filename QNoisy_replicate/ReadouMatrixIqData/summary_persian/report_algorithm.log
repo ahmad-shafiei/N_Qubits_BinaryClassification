@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.28)  14 JUN 2026 16:46
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.28)  16 JUN 2026 12:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -693,15 +693,288 @@ Package caption Info: listings package is loaded.
 \sf@top=\skip102
 \sf@bottom=\skip103
 )
-(c:/texlive/2025/texmf-dist/tex/latex/tools/array.sty
+(c:/texlive/2025/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(c:/texlive/2025/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(c:/texlive/2025/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks47
+\pgfutil@tempdima=\dimen281
+\pgfutil@tempdimb=\dimen282
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box81
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+))
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2025/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(c:/texlive/2025/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+\pgf@x=\dimen283
+\pgf@y=\dimen284
+\pgf@xa=\dimen285
+\pgf@ya=\dimen286
+\pgf@xb=\dimen287
+\pgf@yb=\dimen288
+\pgf@xc=\dimen289
+\pgf@yc=\dimen290
+\pgf@xd=\dimen291
+\pgf@yd=\dimen292
+\w@pgf@writea=\write5
+\r@pgf@reada=\read3
+\c@pgf@counta=\count363
+\c@pgf@countb=\count364
+\c@pgf@countc=\count365
+\c@pgf@countd=\count366
+\t@pgf@toka=\toks48
+\t@pgf@tokb=\toks49
+\t@pgf@tokc=\toks50
+\pgf@sys@id@count=\count367
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
+)
+Driver file for pgf: pgfsys-xetex.def
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-xetex.def
+File: pgfsys-xetex.def 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dvipdfmx.def
+File: pgfsys-dvipdfmx.def 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+)
+\pgfsys@objnum=\count368
+)))
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count369
+\pgfsyssoftpath@bigbuffer@items=\count370
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)) (c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen293
+\pgfmath@count=\count371
+\pgfmath@box=\box82
+\pgfmath@toks=\toks51
+\pgfmath@stack@operand=\toks52
+\pgfmath@stack@operation=\toks53
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.te
+x)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric
+.code.tex)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.t
+ex)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.co
+de.tex)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.te
+x)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithm
+etics.code.tex)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count372
+))
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen294
+\pgf@picmaxx=\dimen295
+\pgf@picminy=\dimen296
+\pgf@picmaxy=\dimen297
+\pgf@pathminx=\dimen298
+\pgf@pathmaxx=\dimen299
+\pgf@pathminy=\dimen300
+\pgf@pathmaxy=\dimen301
+\pgf@xx=\dimen302
+\pgf@xy=\dimen303
+\pgf@yx=\dimen304
+\pgf@yy=\dimen305
+\pgf@zx=\dimen306
+\pgf@zy=\dimen307
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.cod
+e.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen308
+\pgf@path@lasty=\dimen309
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.te
+x
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen310
+\pgf@shorten@start@additional=\dimen311
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfpic=\box83
+\pgf@hbox=\box84
+\pgf@layerbox@main=\box85
+\pgf@picture@serial@count=\count373
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code
+.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen312
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.c
+ode.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen313
+\pgf@pt@y=\dimen314
+\pgf@pt@temp=\dimen315
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.co
+de.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen316
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen317
+\pgf@sys@shading@range@num=\count374
+\pgf@shadingcount=\count375
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfexternal@startupbox=\box86
+) (c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code
+.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))) (c:/texlive/2025/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.te
+x
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodeparttextbox=\box87
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2025/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.st
+y
+Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+\pgf@nodesepstart=\dimen318
+\pgf@nodesepend=\dimen319
+)
+(c:/texlive/2025/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.st
+y
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+)) (c:/texlive/2025/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(c:/texlive/2025/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+\pgffor@iter=\dimen320
+\pgffor@skip=\dimen321
+\pgffor@stack=\toks54
+\pgffor@toks=\toks55
+))
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.co
+de.tex
+File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@plot@mark@count=\count376
+\pgfplotmarksize=\dimen322
+)
+\tikz@lastx=\dimen323
+\tikz@lasty=\dimen324
+\tikz@lastxsaved=\dimen325
+\tikz@lastysaved=\dimen326
+\tikz@lastmovetox=\dimen327
+\tikz@lastmovetoy=\dimen328
+\tikzleveldistance=\dimen329
+\tikzsiblingdistance=\dimen330
+\tikz@figbox=\box88
+\tikz@figbox@bg=\box89
+\tikz@tempbox=\box90
+\tikz@tempbox@bg=\box91
+\tikztreelevel=\count377
+\tikznumberofchildren=\count378
+\tikznumberofcurrentchild=\count379
+\tikz@fig@count=\count380
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfmatrixcurrentrow=\count381
+\pgfmatrixcurrentcolumn=\count382
+\pgf@matrix@numberofcolumns=\count383
+)
+\tikz@expandcount=\count384
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
+brarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.cod
+e.tex
+File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowinset=\dimen331
+\pgfarrowlength=\dimen332
+\pgfarrowwidth=\dimen333
+\pgfarrowlinewidth=\dimen334
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
+brarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
+braryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.g
+eometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(c:/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
+braryfit.code.tex
+File: tikzlibraryfit.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (c:/texlive/2025/texmf-dist/tex/latex/tools/array.sty
 Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
-\col@sep=\dimen281
-\ar@mcellbox=\box81
-\extrarowheight=\dimen282
-\NC@list=\toks47
+\col@sep=\dimen335
+\ar@mcellbox=\box92
+\extrarowheight=\dimen336
+\NC@list=\toks56
 \extratabsurround=\skip104
 \backup@length=\skip105
-\ar@cellbox=\box82
+\ar@cellbox=\box93
 )
 (c:/texlive/2025/texmf-dist/tex/xelatex/xepersian/xepersian.sty
 Package: xepersian 2025/02/02 v25.2.2 (Release Persian Gate) Persian typesettin
@@ -738,20 +1011,20 @@ Package: fontspec 2024/05/11 v2.9e Font selection for XeLaTeX and LuaLaTeX
 (c:/texlive/2025/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
 Package: fontspec-xetex 2024/05/11 v2.9e Font selection for XeLaTeX and LuaLaTe
 X
-\l__fontspec_script_int=\count363
-\l__fontspec_language_int=\count364
-\l__fontspec_strnum_int=\count365
-\l__fontspec_tmp_int=\count366
-\l__fontspec_tmpa_int=\count367
-\l__fontspec_tmpb_int=\count368
-\l__fontspec_tmpc_int=\count369
-\l__fontspec_em_int=\count370
-\l__fontspec_emdef_int=\count371
-\l__fontspec_strong_int=\count372
-\l__fontspec_strongdef_int=\count373
-\l__fontspec_tmpa_dim=\dimen283
-\l__fontspec_tmpb_dim=\dimen284
-\l__fontspec_tmpc_dim=\dimen285
+\l__fontspec_script_int=\count385
+\l__fontspec_language_int=\count386
+\l__fontspec_strnum_int=\count387
+\l__fontspec_tmp_int=\count388
+\l__fontspec_tmpa_int=\count389
+\l__fontspec_tmpb_int=\count390
+\l__fontspec_tmpc_int=\count391
+\l__fontspec_em_int=\count392
+\l__fontspec_emdef_int=\count393
+\l__fontspec_strong_int=\count394
+\l__fontspec_strongdef_int=\count395
+\l__fontspec_tmpa_dim=\dimen337
+\l__fontspec_tmpb_dim=\dimen338
+\l__fontspec_tmpc_dim=\dimen339
 
 (c:/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
@@ -759,43 +1032,43 @@ Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 (c:/texlive/2025/texmf-dist/tex/latex/fontspec/fontspec.cfg)))
 (c:/texlive/2025/texmf-dist/tex/xelatex/xepersian/xepersian-persiancal.sty
 Package: xepersian-persiancal 2025/01/01 v0.3 provides Persian calendar
-\XePersian@i=\count374
-\XePersian@y=\count375
-\XePersian@m=\count376
-\XePersian@d=\count377
-\XePersian@latini=\count378
-\XePersian@persiani=\count379
-\XePersian@latinii=\count380
-\XePersian@persianii=\count381
-\XePersian@latiniii=\count382
-\XePersian@persianiii=\count383
-\XePersian@latiniv=\count384
-\XePersian@persianiv=\count385
-\XePersian@latinv=\count386
-\XePersian@persianv=\count387
-\XePersian@latinvi=\count388
-\XePersian@persianvi=\count389
-\XePersian@latinvii=\count390
-\XePersian@persianvii=\count391
-\XePersian@latinviii=\count392
-\XePersian@persianviii=\count393
-\XePersian@latinix=\count394
-\XePersian@persianix=\count395
-\XePersian@latinx=\count396
-\XePersian@persianx=\count397
-\XePersian@latinxi=\count398
-\XePersian@persianxi=\count399
-\XePersian@latinxii=\count400
-\XePersian@persianxii=\count401
-\XePersian@persianxiii=\count402
-\XePersian@temp=\count403
-\XePersian@temptwo=\count404
-\XePersian@tempthree=\count405
-\XePersian@yModHundred=\count406
-\XePersian@thirtytwo=\count407
-\XePersian@dn=\count408
-\XePersian@sn=\count409
-\XePersian@mminusone=\count410
+\XePersian@i=\count396
+\XePersian@y=\count397
+\XePersian@m=\count398
+\XePersian@d=\count399
+\XePersian@latini=\count400
+\XePersian@persiani=\count401
+\XePersian@latinii=\count402
+\XePersian@persianii=\count403
+\XePersian@latiniii=\count404
+\XePersian@persianiii=\count405
+\XePersian@latiniv=\count406
+\XePersian@persianiv=\count407
+\XePersian@latinv=\count408
+\XePersian@persianv=\count409
+\XePersian@latinvi=\count410
+\XePersian@persianvi=\count411
+\XePersian@latinvii=\count412
+\XePersian@persianvii=\count413
+\XePersian@latinviii=\count414
+\XePersian@persianviii=\count415
+\XePersian@latinix=\count416
+\XePersian@persianix=\count417
+\XePersian@latinx=\count418
+\XePersian@persianx=\count419
+\XePersian@latinxi=\count420
+\XePersian@persianxi=\count421
+\XePersian@latinxii=\count422
+\XePersian@persianxii=\count423
+\XePersian@persianxiii=\count424
+\XePersian@temp=\count425
+\XePersian@temptwo=\count426
+\XePersian@tempthree=\count427
+\XePersian@yModHundred=\count428
+\XePersian@thirtytwo=\count429
+\XePersian@dn=\count430
+\XePersian@sn=\count431
+\XePersian@mminusone=\count432
 )
 (c:/texlive/2025/texmf-dist/tex/xelatex/xepersian/unicode-persianmath.sty
 Package: unicode-persianmath 2025/02/02 v1.2.3 Unicode Persian math
@@ -833,19 +1106,19 @@ setting in plain TeX and LaTeX
 ****************************************************
 (c:/texlive/2025/texmf-dist/tex/xelatex/bidi/biditools.sty
 Package: biditools 2025/02/02 v2.7 Programming tools for bidi package
-\@bidi@envbody=\toks48
-\@bidi@emptytoks=\toks49
-\bidi@poscount=\count411
-\bidi@tempcountb=\count412
-\bidi@temptoksa=\toks50
-\bidi@temptoksb=\toks51
-\bidi@dummies=\count413
-\bidi@are@these@correct=\toks52
-\bidi@toks@lista=\toks53
-\bidi@toks@listb=\toks54
-\bidi@stack@length=\count414
-\bidi@empty@stack=\toks55
-\bidi@looprepeat@depth=\count415
+\@bidi@envbody=\toks57
+\@bidi@emptytoks=\toks58
+\bidi@poscount=\count433
+\bidi@tempcountb=\count434
+\bidi@temptoksa=\toks59
+\bidi@temptoksb=\toks60
+\bidi@dummies=\count435
+\bidi@are@these@correct=\toks61
+\bidi@toks@lista=\toks62
+\bidi@toks@listb=\toks63
+\bidi@stack@length=\count436
+\bidi@empty@stack=\toks64
+\bidi@looprepeat@depth=\count437
 )
 (c:/texlive/2025/texmf-dist/tex/latex/zref/zref-abspage.sty
 Package: zref-abspage 2023-09-14 v2.35 Module abspage for zref (HO)
@@ -860,28 +1133,28 @@ Package zref Info: New property list: main on input line 767.
 Package zref Info: New property: default on input line 768.
 Package zref Info: New property: page on input line 769.
 )
-\c@abspage=\count416
+\c@abspage=\count438
 Package zref Info: New property: abspage on input line 67.
 )
 \@bidi@copyins@=\insert252
-\bidi@typesethour=\count417
-\bidi@typesetminute=\count418
+\bidi@typesethour=\count439
+\bidi@typesetminute=\count440
 
 (c:/texlive/2025/texmf-dist/tex/xelatex/bidi/latex-xetex-bidi.def
 File: latex-xetex-bidi.def 2025/01/03 v1.5.2 bidi adaptations for `latex.ltx' f
 or XeTeX engine
-\bidi@n@everypar=\toks56
+\bidi@n@everypar=\toks65
 LaTeX Info: Redefining \centerline on input line 316.
 LaTeX Info: Redefining \leftline on input line 325.
 LaTeX Info: Redefining \rightline on input line 326.
 LaTeX Info: Redefining \underline on input line 334.
-\bidi@column@check@number=\count419
+\bidi@column@check@number=\count441
 
 (c:/texlive/2025/texmf-dist/tex/xelatex/bidi/footnote-xetex-bidi.def
 File: footnote-xetex-bidi.def 2024/12/14 v1.3 bidi footnote macros for XeTeX en
 gine
-\c@footdir@label=\count420
-\footdir@toks=\toks57
+\c@footdir@label=\count442
+\footdir@toks=\toks66
 )
 (c:/texlive/2025/texmf-dist/tex/xelatex/bidi/algorithm2e-xetex-bidi.def
 File: algorithm2e-xetex-bidi.def 2025/01/03 v0.3 bidi adaptations for algorithm
@@ -968,36 +1241,44 @@ ackage for XeTeX engine
 File: pdfpages-xetex-bidi.def 2010/07/25 v0.1 bidi adaptations for pdfpages pac
 kage for XeTeX engine
 )
+(c:/texlive/2025/texmf-dist/tex/xelatex/bidi/pgfsys-xetex-bidi.def
+File: pgfsys-xetex-bidi.def 2025/01/05 v0.1 bidi adaptations for pgfsys package
+ for XeTeX engine
+)
 (c:/texlive/2025/texmf-dist/tex/xelatex/bidi/xcolor-xetex-bidi.def
 File: xcolor-xetex-bidi.def 2022/06/13 v0.3 bidi adaptations for xcolor package
  for XeTeX engine
 LaTeX Info: Redefining \color on input line 48.
 LaTeX Info: Redefining \bidicolor on input line 91.
+)
+(c:/texlive/2025/texmf-dist/tex/xelatex/bidi/pgfcorescopes.code-xetex-bidi.def
+File: pgfcorescopes.code-xetex-bidi.def 2015/11/14 v0.1 bidi adaptations for pg
+f package for XeTeX engine
 ))
 (c:/texlive/2025/texmf-dist/tex/xelatex/bidi/extrafootnotefeatures-xetex-bidi.d
 ef
 File: extrafootnotefeatures-xetex-bidi.def 2025/01/03 v2.7 bidi extra footnote 
 features for XeTeX engine
-\bidi@columnwidth=\dimen286
+\bidi@columnwidth=\dimen340
 \footmarkwidth=\skip106
 \footinsdim=\skip107
-\bidi@absolutepage@count=\count421
-\bidi@absolutefootnote@count=\count422
+\bidi@absolutepage@count=\count443
+\bidi@absolutefootnote@count=\count444
 \footinsv@r=\insert251
 \footinsv@l=\insert250
 \@mpfootinsv@r=\insert249
 \@mpfootinsv@l=\insert248
-\m@m@k=\count423
-\m@m@h=\dimen287
+\m@m@k=\count445
+\m@m@h=\dimen341
 \m@mipn@skip=\skip108
 )
-\bidi@digits=\count424
+\bidi@digits=\count446
 \bidi@digits@charclass=\XeTeXcharclass1
 \bidi@sepmark@charclass=\XeTeXcharclass2
 )
-\xepersian@tcl=\count425
-\xepersian@ilg=\dimen288
-\xepersian@strutilg=\dimen289
+\xepersian@tcl=\count447
+\xepersian@ilg=\dimen342
+\xepersian@strutilg=\dimen343
 
 (c:/texlive/2025/texmf-dist/tex/xelatex/xepersian/footnote-xetex-bidi-xetex-xep
 ersian.def
@@ -1028,7 +1309,7 @@ stings package for XeTeX engine
 File: url-xetex-xepersian.def 2022/02/18 v0.1 xepersian adaptations for url pac
 kage for XeTeX engine
 )
-\xepersian@toks=\toks58
+\xepersian@toks=\toks67
 )
 
 Package fontspec Info: 
@@ -1082,9 +1363,9 @@ apping=tex-text;"
 
 (c:/texlive/2025/texmf-dist/tex/latex/footmisc/footmisc.sty
 Package: footmisc 2024/12/24 v6.0g a miscellany of footnote facilities
-\FN@temptoken=\toks59
-\footnotemargin=\dimen290
-\@outputbox@depth=\dimen291
+\FN@temptoken=\toks68
+\footnotemargin=\dimen344
+\@outputbox@depth=\dimen345
 Package footmisc Info: Declaring symbol style bringhurst on input line 699.
 Package footmisc Info: Declaring symbol style chicago on input line 707.
 Package footmisc Info: Declaring symbol style wiley on input line 716.
@@ -1176,22 +1457,22 @@ apping=persian-tex-text;"
 ab;mapping=persian-tex-text;"
 
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 13.07996pt on input line 70.
-\c@theorem=\count426
-\c@proposition=\count427
-\c@lemma=\count428
-\c@corollary=\count429
-\c@assumption=\count430
-\c@conjecture=\count431
-\c@definition=\count432
-\c@question=\count433
-\c@oepn_question=\count434
-\c@example=\count435
-\c@problem=\count436
-\c@algorithm_env=\count437
-\c@claim=\count438
-\c@note=\count439
-\c@remark=\count440
+(Font)              scaled to size 13.07996pt on input line 72.
+\c@theorem=\count448
+\c@proposition=\count449
+\c@lemma=\count450
+\c@corollary=\count451
+\c@assumption=\count452
+\c@conjecture=\count453
+\c@definition=\count454
+\c@question=\count455
+\c@oepn_question=\count456
+\c@example=\count457
+\c@problem=\count458
+\c@algorithm_env=\count459
+\c@claim=\count460
+\c@note=\count461
+\c@remark=\count462
 )
 (c:/texlive/2025/texmf-dist/tex/xelatex/bidi/book-xetex-bidi.def
 File: book-xetex-bidi.def 2025/02/02 v1.2 bidi adaptations for standard book cl
@@ -1201,8 +1482,7 @@ ass for XeTeX engine
 File: float-xetex-bidi.def 2013/04/04 v0.2 bidi adaptations for float package f
 or XeTeX engine
 )
-(./report_algorithm.aux (./front/template/title.aux)
-(./readout_noise_report.aux) (./bibs/bibs.aux))
+(./report_algorithm.aux (./readout_noise_report.aux) (./bibs/bibs.aux))
 \openout1 = `report_algorithm.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -1226,10 +1506,10 @@ LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 Package hyperref Info: Link coloring ON on input line 5.
- (./report_algorithm.out)
-(./report_algorithm.out)
-\@outlinefile=\write5
-\openout5 = `report_algorithm.out'.
+
+(./report_algorithm.out) (./report_algorithm.out)
+\@outlinefile=\write6
+\openout6 = `report_algorithm.out'.
 
 
 *geometry* driver: auto-detecting
@@ -1287,77 +1567,32 @@ Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
 File: pdflscape-xetex-bidi.def 2022/02/18 v0.1 bidi adaptations for pdflscape p
 ackage for XeTeX engine
 )
-\c@lstlisting=\count441
+\c@lstlisting=\count463
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-\openout2 = `front/template/title.aux'.
+\openout2 = `readout_noise_report.aux'.
 
 
-(./front/template/title.tex
-File: front/template/SUT_logo.pdf Graphic file (type pdf)
-<use front/template/SUT_logo.pdf>
-File: front/template/PsiAlg_logo.png Graphic file (type bmp)
-<front/template/PsiAlg_logo.png>
-
-Overfull \hbox (42.87314pt too wide) in paragraph at lines 13--14
- [][]|  [][][][]
- []
-
-LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
-(Font)              scaled to size 13.07996pt on input line 22.
+(./readout_noise_report.tex
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 22.60652pt on input line 26.
+(Font)              scaled to size 27.11911pt on input line 1.
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
-(Font)              scaled to size 22.60652pt on input line 31.
+(Font)              scaled to size 27.11911pt on input line 1.
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 15.69594pt on input line 35.
-
-
-[1
-
-
-
-]
-
-[2])
-LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 27.11911pt on input line 15.
+(Font)              scaled to size 18.83513pt on input line 3.
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
-(Font)              scaled to size 27.11911pt on input line 15.
- (./report_algorithm.toc
-LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+(Font)              scaled to size 18.83513pt on input line 3.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 9.
 
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 9.
 
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-
-[1
-
-
-
-
-])
-\tf@toc=\write6
-\openout6 = `report_algorithm.toc'.
-
-
-
-[2]
-\openout2 = `readout_noise_report.aux'.
-
- (./readout_noise_report.tex
-فصل 1.
-LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 18.83513pt on input line 3.
-LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
-(Font)              scaled to size 18.83513pt on input line 3.
-
 Overfull \hbox (15.25388pt too wide) in paragraph at lines 9--10
 [][][]\TU/lmroman10-regular(0)/m/n/12 readout_matrix.ipynb[]\TU/XBNiloofar(0)/m
 /n/12 : بارگذاری داده‌های تجربی، آموزش تفکیک‌کننده []\TU/lmroman10-regular(0)/m
@@ -1368,14 +1603,21 @@ LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
 (Font)              scaled to size 8.71997pt on input line 15.
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
 (Font)              scaled to size 6.53998pt on input line 15.
-LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
-(Font)              scaled to size 15.69594pt on input line 22.
 
 
 [1
 
 
+
+
 ]
+LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
+(Font)              scaled to size 13.07996pt on input line 61.
+LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
+(Font)              scaled to size 15.69594pt on input line 70.
+LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
+(Font)              scaled to size 15.69594pt on input line 70.
+
 
 [2]
 File: figs/clouds.png Graphic file (type bmp)
@@ -1384,70 +1626,73 @@ File: figs/clouds.png Graphic file (type bmp)
 
 [3]
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 88.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 88.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 88.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 109.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 109.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 109.
-
-
-
 [4]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 138.
+(hyperref)                removing `math shift' on input line 136.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 138.
+(hyperref)                removing `\times' on input line 136.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 138.
+(hyperref)                removing `math shift' on input line 136.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 138.
+(hyperref)                removing `math shift' on input line 157.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 138.
+(hyperref)                removing `\times' on input line 157.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 138.
+(hyperref)                removing `math shift' on input line 157.
 
 
-Overfull \hbox (9.20341pt too wide) in paragraph at lines 140--141
+
+[5]
+LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/it' will be
+(Font)              scaled to size 13.07996pt on input line 188.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 216.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\times' on input line 216.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 216.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 216.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\times' on input line 216.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 216.
+
+
+Overfull \hbox (9.20341pt too wide) in paragraph at lines 218--219
 []\TU/XBNiloofar(0)/m/n/12 اگر خطای خوانش چهار کیوبیت کاملاً مستقل بود، ماتریس 
 کامل از کرونکر محصول ماتریس‌های تک‌کیوبیتی[]
  []
 
 
 
-[5]
+[6]
 File: figs/independent_circuit.png Graphic file (type bmp)
 <figs/independent_circuit.png>
 
-
-[6]
 
 [7]
 File: figs/zzfeaturemap_circuit.png Graphic file (type bmp)
@@ -1455,67 +1700,104 @@ File: figs/zzfeaturemap_circuit.png Graphic file (type bmp)
 
 
 [8]
-Overfull \hbox (3.39595pt too wide) in paragraph at lines 240--241
+
+[9]
+Overfull \hbox (3.39595pt too wide) in paragraph at lines 318--319
 [][]\TU/XBNiloofar(0)/m/n/12 این روش خطای واقعی هر کیوبیت را لحاظ می‌کند، اما ه
 مچنان فرض می‌کند کانال کلی فاکتورسازی‌شده[]
  []
 
 
 
-[9]
-
 [10]
+LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
+(Font)              scaled to size 11.93546pt on input line 341.
+
 
 [11]
 
 [12]
 
 [13]
-
-[14]
-Overfull \hbox (8.71594pt too wide) in paragraph at lines 417--418
-[]\TU/XBNiloofar(0)/m/n/12 benchmark ساده و فاکتورسازی‌شده است، در حالی که []\T
-U/lmroman10-regular(0)/m/n/12 ZZ FeatureMap[] \TU/XBNiloofar(0)/m/n/12 با گیت‌ه
-ای فاز و برهم‌کنش‌های[]
+Overfull \hbox (25.33882pt too wide) in paragraph at lines 471--475
+ [][][][][][] 
  []
 
-)
+
+Overfull \hbox (25.33882pt too wide) in paragraph at lines 480--484
+ [][][][][][] 
+ []
+
+
+Overfull \hbox (25.33882pt too wide) in paragraph at lines 489--493
+ [][][][][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
+[][]|\TU/XBNiloofar(0)/m/n/10.95 یکسان‌سازی []\TU/lmroman10-regular(0)/m/n/10.9
+5 bits_to_int[] \TU/XBNiloofar(0)/m/n/10.95 در[]
+ []
+
+
+Overfull \hbox (22.37685pt too wide) in paragraph at lines 519--520
+[][]|[]\TU/lmroman10-regular(0)/m/n/10.95 apply_correlated_readout_noise[]| []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 520--520
+[][]|[]\TU/lmroman10-regular(0)/m/n/10.95 ZZFeatureMap[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 521--522
+[][]|\TU/XBNiloofar(0)/m/n/10.95 آموزش روی نویز متناسب با[]
+ []
+
+
+
+[14]
 
 [15]
+
+[16]
+
+[17]
+
+[18]
+
+[19])
+Overfull \hbox (7.61452pt too wide) in paragraph at lines 675--21
+[]\TU/XBNiloofar(0)/m/n/12 تجربی. اما train/test mismatch می‌تواند عملکرد را از
+ baseline پایین‌تر ببرد. برای کاربرد سخت‌افزاری،[]
+ []
+
+
+
+[20]
 \openout2 = `bibs/bibs.aux'.
 
- (./bibs/bibs.tex (./report_algorithm.bbl
-
-LaTeX Warning: Empty `thebibliography' environment on input line 3.
-
-))
-
-[16
-
-
-
-
-
-]
-runsystem(latexminted cleantemp  --timestamp 20260614164615 BFDCF20FA30EBED6D73
+ (./bibs/bibs.tex
+No file report_algorithm.bbl.
+)
+runsystem(latexminted cleantemp  --timestamp 20260616122331 BFDCF20FA30EBED6D73
 2F853AE4B1386)...executed safely (allowed).
 
- (./report_algorithm.aux (./front/template/title.aux)
-(./readout_noise_report.aux) (./bibs/bibs.aux))
+ (./report_algorithm.aux (./readout_noise_report.aux) (./bibs/bibs.aux))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `report_algorithm.out' has not changed.
-(rerunfilecheck)             Checksum: 8BC71BA1FAF52BA2C94E37D503B1D4E2;7697.
+(rerunfilecheck)             Checksum: E33F1FE3617A0C74061FA15698D1D2C8;9453.
  ) 
 Here is how much of TeX's memory you used:
- 27277 strings out of 473831
- 574835 string characters out of 5733136
- 1140976 words of memory out of 5000000
- 49819 multiletter control sequences out of 15000+600000
- 570431 words of font info for 115 fonts, out of 8000000 for 9000
+ 37800 strings out of 473831
+ 805155 string characters out of 5733136
+ 1357018 words of memory out of 5000000
+ 60141 multiletter control sequences out of 15000+600000
+ 572279 words of font info for 121 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 91i,13n,96p,1219b,606s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 91i,15n,96p,1219b,839s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on report_algorithm.pdf (20 pages).
