@@ -528,7 +528,7 @@ noise_matrix_results/
 
 Run:
 
-noisy_4q_zz.ipynb
+noisy_4q_zzfeaturemap.ipynb
 
 using generated noise matrices.
 
@@ -548,3 +548,163 @@ The Cursor agent should treat the following as highly sensitive and important:
 8. Correlated noise is manually applied
 9. All probability vectors are 16-dimensional
 10. Experimental IQ data are complex-valued
+
+# ============================
+# 📊 METRICS SYSTEM
+# ============================
+
+All models are evaluated using:
+
+- FidelityMean
+- L1Mean
+- KLMean
+
+Defined as:
+
+- Fidelity = (Σ √(p*y))²
+- L1 = Σ |p - y|
+- KL = Σ y log(y/p)
+
+---
+
+# ============================
+# ⚠️ CURRENT IMPLEMENTATION ISSUE
+# ============================
+
+## ❗ Problem
+
+The current system:
+
+✔ correctly computes metrics  
+✔ correctly trains models  
+✔ correctly builds experiments  
+
+BUT:
+
+### ❌ Visualization + Dashboard system is NOT fully generalized
+
+Specifically:
+
+1. `build_summary_df()` is partially metric-specific
+2. `full_dashboard()` assumes only Fidelity-like structure
+3. Table rendering is not dynamically switchable between metrics
+4. Manual filtering is currently required
+
+---
+
+# ============================
+# 🎯 REQUIRED UPGRADE TASK
+# ============================
+
+The system must be refactored so that:
+
+## 1. Summary Table
+
+The same pipeline must support:
+
+- FidelityMean
+- L1Mean
+- KLMean
+
+WITHOUT modifying experiment reruns.
+
+---
+
+## 2. Dashboard System
+
+The function:
+
+```python
+full_dashboard(summary_df)
+
+must be upgraded to:
+
+full_dashboard(summary_df, metric="FidelityMean")
+
+or:
+
+full_dashboard(summary_df, metric="L1Mean")
+
+or:
+
+full_dashboard(summary_df, metric="KLMean")
+3. Table System
+
+Must support:
+
+show_summary_table(summary_df, metric="L1Mean")
+============================
+🧠 REQUIRED FUNCTION BEHAVIOR
+============================
+build_summary_df()
+
+Must:
+
+store ALL metrics per dataset
+NOT hardcode Fidelity only
+keep structure:
+
+(Circuit, Training Noise) → {Synthetic, Experimental Single, Experimental Correlated}
+
+full_dashboard()
+
+Must:
+
+accept metric argument
+dynamically select metric columns
+generate circuit-wise heatmaps
+enforce row order:
+
+No Training → Synthetic → Experimental Single → Experimental Correlated
+
+run_all_tests()
+
+Must:
+
+remain unchanged logically
+only feed metrics into register_results()
+============================
+🔥 CRITICAL DESIGN RULE
+============================
+
+❗ No experiment re-run should be required when switching metric visualization.
+
+All metrics must be computed once and reused.
+
+============================
+📌 FINAL GOAL
+============================
+
+After refactor, user should be able to:
+
+summary_df = build_summary_df(EXPERIMENTS)
+
+show_summary_table(summary_df, "KLMean")
+full_dashboard(summary_df, metric="L1Mean")
+
+WITHOUT:
+
+recomputation
+retraining
+data reload
+============================
+🤖 AGENT INSTRUCTIONS
+============================
+dshboards output for fidelities are avalaible at folder named figs. 
+also table of output for the fidelity metrices might be available in the 
+jupyter notebook code. 
+
+If you are an AI agent working on this project:
+
+Prioritize fixing build_summary_df schema first
+Then refactor full_dashboard
+Ensure metric-agnostic design
+Avoid breaking existing Fidelity pipeline
+Preserve ordering constraints strictly
+Do NOT modify dataset generation or quantum circuits
+Focus ONLY on post-processing + visualization layer
+============================
+END OF SPEC
+============================
+
+---
