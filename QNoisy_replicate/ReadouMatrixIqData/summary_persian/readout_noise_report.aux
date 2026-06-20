@@ -57,45 +57,49 @@
 \bidi@finalfootnoteperpage{10}{0}
 \@writefile{toc}{\contentsline {section}{\numberline {0.7}تولید دیتاست، استراتژی آزمایش و مدل یادگیری ماشین}{11}{section.0.0.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {0.7.1}استراتژی طراحی دیتاست‌ها}{11}{subsection.0.0.7.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces منطق طراحی دیتاست در فازهای مختلف}}{11}{table.caption.7}\protected@file@percent }
-\newlabel{tab:dataset-strategy}{{2}{11}{منطق طراحی دیتاست در فازهای مختلف}{table.caption.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces منطق طراحی دیتاست در فازهای مختلف (ارزیابی با نویز منطبق)}}{11}{table.caption.7}\protected@file@percent }
+\newlabel{tab:dataset-strategy}{{2}{11}{منطق طراحی دیتاست در فازهای مختلف (ارزیابی با نویز منطبق)}{table.caption.7}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {0.7.2}خط لوله تولید دیتاست}{11}{subsection.0.0.7.2}\protected@file@percent }
 \bidi@finalfootnoteperpage{11}{0}
 \@writefile{toc}{\contentsline {subsection}{\numberline {0.7.3}نقش مدل \lr {MLP}: تقریب کانال معکوس}{12}{subsection.0.0.7.3}\protected@file@percent }
 \bidi@finalfootnoteperpage{12}{0}
-\@writefile{toc}{\contentsline {section}{\numberline {0.8}معیار fidelity و baselineها}{13}{section.0.0.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.8.1}تعریف و تفسیر}{13}{subsection.0.0.8.1}\protected@file@percent }
-\newlabel{eq:fidelity}{{16}{13}{تعریف و تفسیر}{equation.0.0.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.8.2}چرا fidelity معیار مناسبی است؟}{13}{subsection.0.0.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {0.8}معیارهای ارزیابی و baselineها}{13}{section.0.0.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.8.1}Fidelity (وفاداری / شباهت Bhattacharyya-based)}{13}{subsection.0.0.8.1}\protected@file@percent }
+\newlabel{eq:fidelity}{{16}{13}{Fidelity (وفاداری / شباهت Bhattacharyya-based)}{equation.0.0.16}{}}
 \bidi@finalfootnoteperpage{13}{0}
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.8.3}سه حالت مقایسه در ارزیابی}{14}{subsection.0.0.8.3}\protected@file@percent }
-\newlabel{eq:f-raw}{{19}{14}{سه حالت مقایسه در ارزیابی}{equation.0.0.19}{}}
-\newlabel{eq:f-mlp}{{20}{14}{سه حالت مقایسه در ارزیابی}{equation.0.0.20}{}}
-\newlabel{eq:delta-f}{{21}{14}{سه حالت مقایسه در ارزیابی}{equation.0.0.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.8.2}L1 Error (فاصله منهتن / Total Variation-like)}{14}{subsection.0.0.8.2}\protected@file@percent }
+\newlabel{eq:l1}{{17}{14}{L1 Error (فاصله منهتن / Total Variation-like)}{equation.0.0.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.8.3}KL Divergence (واگرایی کولباک–لیبلر)}{14}{subsection.0.0.8.3}\protected@file@percent }
+\newlabel{eq:kl}{{18}{14}{KL Divergence (واگرایی کولباک–لیبلر)}{equation.0.0.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.8.4}نقش هر معیار در پروژه}{14}{subsection.0.0.8.4}\protected@file@percent }
 \bidi@finalfootnoteperpage{14}{0}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces نمایش مفهومی بازسازی توزیع: ایده‌آل (چپ)، نویزی (وسط)، خروجی \lr {MLP} (راست). هدف mitigation بازگرداندن شکل توزیع است، نه فقط بیشینه احتمال.}}{15}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:dist-reconstruction}{{5}{15}{نمایش مفهومی بازسازی توزیع: ایده‌آل (چپ)، نویزی (وسط)، خروجی \lr {MLP} (راست). هدف mitigation بازگرداندن شکل توزیع است، نه فقط بیشینه احتمال}{figure.caption.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces خلاصه معیارهای ارزیابی}}{15}{table.caption.8}\protected@file@percent }
+\newlabel{tab:metrics-summary}{{3}{15}{خلاصه معیارهای ارزیابی}{table.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.8.5}سه حالت مقایسه در ارزیابی}{15}{subsection.0.0.8.5}\protected@file@percent }
+\newlabel{eq:f-raw}{{19}{15}{سه حالت مقایسه در ارزیابی}{equation.0.0.19}{}}
+\newlabel{eq:f-mlp}{{20}{15}{سه حالت مقایسه در ارزیابی}{equation.0.0.20}{}}
+\newlabel{eq:delta-f}{{21}{15}{سه حالت مقایسه در ارزیابی}{equation.0.0.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces نمایش مفهومی بازسازی توزیع: ایده‌آل (چپ)، نویزی (وسط)، خروجی \lr {MLP} (راست). هدف mitigation بازگرداندن شکل توزیع است، نه فقط بیشینه احتمال.}}{15}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:dist-reconstruction}{{5}{15}{نمایش مفهومی بازسازی توزیع: ایده‌آل (چپ)، نویزی (وسط)، خروجی \lr {MLP} (راست). هدف mitigation بازگرداندن شکل توزیع است، نه فقط بیشینه احتمال}{figure.caption.9}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {0.9}چالش‌ها، اصلاحات و نتایج}{15}{section.0.0.9}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {0.9.1}چالش‌های پروژه و راه‌حل‌ها}{15}{subsection.0.0.9.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces چالش‌های اصلی و اصلاحات انجام‌شده}}{15}{table.caption.9}\protected@file@percent }
-\newlabel{tab:challenges}{{3}{15}{چالش‌های اصلی و اصلاحات انجام‌شده}{table.caption.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.2}بررسی چالش یکنواختی \lr {ZZFeatureMap}}{15}{subsection.0.0.9.2}\protected@file@percent }
 \bidi@finalfootnoteperpage{15}{0}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces چالش‌های اصلی و اصلاحات انجام‌شده}}{16}{table.caption.10}\protected@file@percent }
+\newlabel{tab:challenges}{{4}{16}{چالش‌های اصلی و اصلاحات انجام‌شده}{table.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.2}بررسی چالش یکنواختی \lr {ZZFeatureMap}}{16}{subsection.0.0.9.2}\protected@file@percent }
 \bidi@finalfootnoteperpage{16}{0}
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.3}جدول اصلی fidelity}{17}{subsection.0.0.9.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces میانگین fidelity روی دیتاست‌های test. سطرها نوع مدار و نویز آموزش، ستون‌ها نویز آزمون هستند.}}{17}{table.caption.10}\protected@file@percent }
-\newlabel{tab:main-fidelity}{{4}{17}{میانگین fidelity روی دیتاست‌های test. سطرها نوع مدار و نویز آموزش، ستون‌ها نویز آزمون هستند}{table.caption.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.4}تحلیل ردیف بدون آموزش}{17}{subsection.0.0.9.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.5}اهمیت هم‌خوانی نویز آموزش و آزمون}{17}{subsection.0.0.9.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.3}جدول اصلی نتایج (ارزیابی با نویز منطبق)}{17}{subsection.0.0.9.3}\protected@file@percent }
 \bidi@finalfootnoteperpage{17}{0}
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.6}وقتی نویز آموزش و آزمون متفاوت است}{18}{subsection.0.0.9.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.7}بهبود نسبت به baseline}{18}{subsection.0.0.9.7}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces بهبود fidelity در حالت هم‌خوانی نویز آموزش و آزمون.}}{18}{table.caption.11}\protected@file@percent }
-\newlabel{tab:delta-fidelity}{{5}{18}{بهبود fidelity در حالت هم‌خوانی نویز آموزش و آزمون}{table.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces میانگین fidelity روی test با نویز منطبق train/test.}}{18}{table.caption.11}\protected@file@percent }
+\newlabel{tab:main-fidelity}{{5}{18}{میانگین fidelity روی test با نویز منطبق train/test}{table.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.4}تحلیل baseline}{18}{subsection.0.0.9.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.5}اثر آموزش با نویز منطبق}{18}{subsection.0.0.9.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.6}چرا ارزیابی منطبق؟}{18}{subsection.0.0.9.6}\protected@file@percent }
 \bidi@finalfootnoteperpage{18}{0}
+\@writefile{toc}{\contentsline {subsection}{\numberline {0.9.7}بهبود نسبت به baseline}{19}{subsection.0.0.9.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {0.10}محدودیت‌های فعلی پروژه}{19}{section.0.0.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {0.11}نکات حساس و توصیه‌های عملی}{19}{section.0.0.11}\protected@file@percent }
 \bidi@finalfootnoteperpage{19}{0}
+\@writefile{toc}{\contentsline {section}{\numberline {0.11}نکات حساس و توصیه‌های عملی}{20}{section.0.0.11}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {0.12}جمع‌بندی نهایی}{20}{section.0.0.12}\protected@file@percent }
 \bidi@finalfootnoteperpage{20}{0}
 \@setckpt{readout_noise_report}{
@@ -118,10 +122,10 @@
 \setcounter{table}{5}
 \setcounter{parentequation}{0}
 \setcounter{section@level}{1}
-\setcounter{Item}{23}
+\setcounter{Item}{26}
 \setcounter{Hfootnote}{0}
 \setcounter{Hy@AnnotLevel}{0}
-\setcounter{bookmark@seq@number}{38}
+\setcounter{bookmark@seq@number}{40}
 \setcounter{AM@survey}{0}
 \setcounter{lstnumber}{1}
 \setcounter{FancyVerbLine}{0}

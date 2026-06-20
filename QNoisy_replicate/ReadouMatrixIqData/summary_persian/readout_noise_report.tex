@@ -2,12 +2,12 @@
 
 \section{هدف و تصویر کلی}
 
-هدف این گزارش، مستندسازی یک خط لوله کامل برای مدل‌سازی نویز خوانش در یک سامانه چهار کیوبیتی است. پروژه از داده‌های خام تجربی \lr{IQ} شروع می‌شود، از روی آن‌ها ماتریس‌های خطای خوانش را استخراج می‌کند، سپس این نویزها را روی مدارهای کوانتومی اعمال می‌کند و در نهایت با یک مدل یادگیری ماشین تلاش می‌کند توزیع احتمال نویزی را به توزیع ایده‌آل بازگرداند.
+هدف این گزارش، مستندسازی یک پایپلاین کامل برای مدل‌سازی نویز خوانش در یک سامانه چهار کیوبیتی است. پروژه از داده‌های خام تجربی \lr{IQ} شروع می‌شود، از روی آن‌ها ماتریس‌های خطای خوانش را استخراج می‌کند، سپس این نویزها را روی مدارهای کوانتومی اعمال می‌کند و در نهایت با یک مدل یادگیری ماشین تلاش می‌کند توزیع احتمال نویزی را به توزیع ایده‌آل بازگرداند.
 
 دو فایل اصلی پروژه چنین نقشی دارند:
 \begin{itemize}
 	\item \lr{readout\_matrix.ipynb}: بارگذاری داده‌های تجربی، آموزش تفکیک‌کننده \lr{IQ}، استخراج ماتریس‌های $2\times2$ و $16\times16$؛
-	\item \lr{noisy\_4q\_zzfeaturemap.ipynb}: ساخت مدار، اعمال سه نوع نویز، تولید دیتاست، آموزش \lr{MLP} و ارزیابی با fidelity.
+	\item \lr{noisy\_4q\_zzfeaturemap.ipynb}: ساخت مدار، اعمال سه نوع نویز، تولید دیتاست، آموزش \lr{MLP} و ارزیابی با \lr{fidelity}.
 \end{itemize}
 
 در کل پروژه یک قرارداد مهم حفظ می‌شود: ماتریس نویز خوانش به صورت
@@ -332,33 +332,34 @@ noise_model.add_readout_error(readout_error, [q])
 
 \subsection{استراتژی طراحی دیتاست‌ها}
 
-ساختار پوشه‌های \lr{DataTrain} فقط یک سازماندهی فایل نیست؛ پشت آن یک منطق آزمایشی مشخص قرار دارد. هدف صرفاً \emph{interpolation} روی یک مدار و یک نویز نبود، بلکه بررسی \textbf{generalization} نسبت به تغییر مدار و تغییر کانال نویز نیز مدنظر بود.
-
+ساختار پوشه‌های \lr{DataTrain} فقط یک سازماندهی فایل نیست؛ پشت آن یک منطق آزمایشی مشخص قرار دارد. در نسخه نهایی پروژه، \textbf{نویز آموزش و آزمون منطبق} در نظر گرفته می‌شود: هر مدل فقط روی همان کانال نویزی ارزیابی می‌شود که با آن آموزش دیده است. این انتخاب باعث می‌شود تحلیل نتایج مستقیم‌تر و از نظر فیزیکی معنادارتر باشد.
 \begin{table}[htbp]
-\centering
-\caption{منطق طراحی دیتاست در فازهای مختلف}
-\label{tab:dataset-strategy}
-\small
-\begin{tabular}{p{2.2cm}p{3.2cm}p{3.2cm}p{4.5cm}}
-\toprule
-فاز & Train & Validation & Test \\
-\midrule
-0 & --- & --- & \lr{Independent} $\times$ ۳ نویز \\
-1 & \lr{Ind. + Synthetic} & \lr{Ind. + Synthetic} & \lr{Ind.} $\times$ ۳ نویز \\
-2\_0 & \lr{Ind. + Exp. Single} & \lr{Ind. + Exp. Single} & \lr{Ind.} $\times$ ۳ نویز \\
-2\_1 & \lr{Ind. + Exp. Corr.} & \lr{Ind. + Exp. Corr.} & \lr{Ind.} $\times$ ۳ نویز \\
-3\_0 & \lr{ZZ + Synthetic} & \lr{ZZ + Synthetic} & \lr{ZZ} $\times$ ۳ نویز \\
-3\_1 & \lr{ZZ + Exp. Single} & \lr{ZZ + Exp. Single} & \lr{Ind.} یا \lr{ZZ} $\times$ ۳ نویز \\
-3\_2 & \lr{ZZ + Exp. Corr.} & \lr{ZZ + Exp. Corr.} & \lr{ZZ} $\times$ ۳ نویز \\
-\bottomrule
-\end{tabular}
+	\centering
+	\caption{منطق طراحی دیتاست در فازهای مختلف (ارزیابی با نویز منطبق)}
+	\label{tab:dataset-strategy}
+	\small
+	\begin{latin}
+		\begin{tabular}{p{2.2cm}p{3.5cm}p{3.5cm}p{4.2cm}}
+			\toprule
+			Phase & Train & Validation & Test (matched) \\
+			\midrule
+			0   & --- & --- & \lr{Independent/ZZ} $\times$ 3 noises (baseline) \\
+			1   & \lr{Ind. + Synthetic} & \lr{Ind. + Synthetic} & \lr{Ind. + Synthetic} \\
+			2\_0 & \lr{Ind. + Exp. Single} & \lr{Ind. + Exp. Single} & \lr{Ind. + Exp. Single} \\
+			2\_1 & \lr{Ind. + Exp. Corr.} & \lr{Ind. + Exp. Corr.} & \lr{Ind. + Exp. Corr.} \\
+			3\_0 & \lr{ZZ + Synthetic} & \lr{ZZ + Synthetic} & \lr{ZZ + Synthetic} \\
+			3\_1 & \lr{ZZ + Exp. Single} & \lr{ZZ + Exp. Single} & \lr{ZZ + Exp. Single} \\
+			3\_2 & \lr{ZZ + Exp. Corr.} & \lr{ZZ + Exp. Corr.} & \lr{ZZ + Exp. Corr.} \\
+			\bottomrule
+		\end{tabular}
+	\end{latin}
 \end{table}
 
-\textbf{سه سطح تعمیم‌پذیری:}
+\textbf{منطق ارزیابی:}
 \begin{enumerate}
-	\item \textbf{همان مدار، همان نویز} (قطری جدول نتایج): بهترین عملکرد؛
-	\item \textbf{همان مدار، نویز متفاوت}: سنجش robustness کانال نویز؛
-	\item \textbf{مدار متفاوت، نویز متفاوت}: سخت‌ترین حالت generalization.
+	\item \textbf{فاز ۰ (baseline):} مدل هویت؛ ارزیابی روی هر سه نویز برای سنجش شدت خام نویز؛
+	\item \textbf{فازهای ۱ تا ۳:} آموزش و آزمون روی \emph{همان} مدار و \emph{همان} نویز؛
+	\item \textbf{مقایسه نهایی:} برای هر $(\text{مدار}, \text{نویز})$، baseline در برابر مدل آموزش‌دیده.
 \end{enumerate}
 
 \subsection{خط لوله تولید دیتاست}
@@ -403,7 +404,7 @@ DataTrain/
 \begin{itemize}
 	\item \textbf{نیست} classifier حالت $|s\rangle$؛
 	\item \textbf{نیست} state discriminator روی \lr{IQ}؛
-	\item \textbf{است} تقریب غیرخطی از \emph{inverse readout channel}:
+	\item \textbf{هست} تقریب غیرخطی از \emph{inverse readout channel}:
 	\[
 		f_\theta \approx \mathcal{M}^{-1}, \qquad
 		\hat{\mathbf{p}}_{\mathrm{ideal}} = f_\theta(\mathbf{p}_{\mathrm{noisy}}).
@@ -414,37 +415,66 @@ DataTrain/
 
 آموزش با \lr{Adam} ($\text{lr}=10^{-3}$)، batch size ۶۴ و حدود ۵۱ epoch انجام شده است. زیان اصلی \lr{KLDivLoss} است؛ در فاز \lr{3\_2} از \lr{MSELoss} نیز استفاده شده است.
 
-\section{معیار fidelity و baselineها}
+\section{معیارهای ارزیابی و baselineها}
 
-\subsection{تعریف و تفسیر}
+\subsection{Fidelity (وفاداری / شباهت Bhattacharyya-based)}
 
-برای دو توزیع احتمال $\mathbf{p}$ و $\mathbf{q}$، fidelity کلاسیک پروژه به صورت
+برای دو توزیع احتمال $\mathbf{p}$ (ایده‌آل) و $\mathbf{q}$ (پیش‌بینی یا نویزی)، fidelity کلاسیک پروژه:
 \begin{equation}
 	F(\mathbf{p},\mathbf{q})
 	=
-	\left(\sum_{i=0}^{15}\sqrt{p_iq_i}\right)^2
+	\left(\sum_{i=0}^{15}\sqrt{p_i q_i}\right)^2
 	\label{eq:fidelity}
 \end{equation}
-تعریف شده است. این کمیت مربع ضریب \lr{Bhattacharyya} است. اگر دو توزیع یکسان باشند، $F=1$؛ اگر روی حالت‌های کاملاً جدا وزن داشته باشند، $F=0$.
+تعریف شده است. این کمیت \textbf{معیار شباهت} است نه فاصله: مقدار آن بین $0$ و $1$ است؛ $F=1$ یعنی دو توزیع کاملاً یکسان‌اند. در فیزیک کوانتومی fidelity برای مقایسه حالت‌ها و توزیع‌های اندازه‌گیری بسیار رایج است.
 
-از دید فیزیکی، fidelity میزان همپوشانی دو توزیع اندازه‌گیری را می‌سنجد. اگر نویز خوانش بخشی از احتمال را از حالت‌های درست به حالت‌های اشتباه منتقل کند، overlap بین توزیع ایده‌آل و نویزی کم می‌شود. اگر مدل mitigation موفق باشد، خروجی آن دوباره به توزیع ایده‌آل نزدیک می‌شود و fidelity افزایش می‌یابد.
+از دید فیزیکی، fidelity میزان همپوشانی دو توزیع را می‌سنجد. اگر نویز خوانش بخشی از احتمال را از حالت‌های درست به حالت‌های اشتباه منتقل کند، overlap کم می‌شود. اگر مدل mitigation موفق باشد، $F(\mathbf{p}_{\mathrm{ideal}}, \hat{\mathbf{p}})$ افزایش می‌یابد.
 
-\subsection{چرا fidelity معیار مناسبی است؟}
+\subsection{L1 Error (فاصله منهتن / Total Variation-like)}
 
-accuracy فقط می‌گوید بیشینه احتمال یا برچسب نهایی درست بوده یا نه؛ اما در این پروژه خروجی یک توزیع کامل ۱۶ بعدی است. fidelity کل شکل توزیع را مقایسه می‌کند. مثلاً اگر دو بردار بیشینه یکسانی داشته باشند ولی احتمال‌های باقی‌مانده متفاوت باشند، fidelity این تفاوت را ثبت می‌کند.
+\begin{equation}
+	L_1(\mathbf{p}, \mathbf{q}) = \sum_{i=0}^{15} |p_i - q_i|
+	\label{eq:l1}
+\end{equation}
 
-در پروژه، fidelity در سه نقش استفاده شده است:
+این معیار \textbf{متقارن} و ساده است: مجموع اختلاف مطلق بین دو توزیع. تفسیر مستقیم دارد: «در مجموع چقدر جرم احتمال جابه‌جا شده؟» ارتباط نزدیک با \lr{Total Variation Distance} دارد ($\mathrm{TV} = \frac{1}{2}L_1$). هرچه $L_1$ کوچک‌تر باشد، بازسازی بهتر است. برخلاف fidelity، bounded در $[0,1]$ نیست (حداکثر $2$ برای بردارهای احتمال).
+
+\subsection{KL Divergence (واگرایی کولباک–لیبلر)}
+
+\begin{equation}
+	D_{\mathrm{KL}}(\mathbf{p} \Vert \mathbf{q})
+	=
+	\sum_{i=0}^{15} p_i \log\frac{p_i}{q_i}
+	\label{eq:kl}
+\end{equation}
+
+این معیار می‌پرسد: «اگر توزیع واقعی $\mathbf{p}$ باشد و ما آن را با $\mathbf{q}$ تقریب بزنیم، چقدر اطلاعات از دست می‌دهیم؟» ویژگی‌های مهم:
 \begin{itemize}
-	\item \textbf{baseline}: $F(\mathbf{p}_{\mathrm{ideal}},\mathbf{p}_{\mathrm{noisy}})$؛
-	\item \textbf{ارزیابی مدل}: $F(\mathbf{p}_{\mathrm{ideal}},\hat{\mathbf{p}})$؛
-	\item \textbf{مقایسه فازها}: میانگین fidelity روی ۱۵۰۰ نمونه test.
+	\item \textbf{نامتقارن} است: $D_{\mathrm{KL}}(\mathbf{p}\Vert\mathbf{q}) \neq D_{\mathrm{KL}}(\mathbf{q}\Vert\mathbf{p})$؛
+	\item وقتی $q_i$ خیلی کوچک و $p_i$ بزرگ باشد، مقدار به‌شدت رشد می‌کند؛
+	\item در نواحی با $p_i$ بالا به تفاوت‌های کوچک حساس است.
 \end{itemize}
-دو معیار کمکی دیگر نیز وجود دارد:
-\begin{align}
-	\|\mathbf{p}-\mathbf{q}\|_1 &= \sum_i |p_i-q_i|,\\
-	D_{\mathrm{KL}}(\mathbf{p}\Vert\mathbf{q}) &= \sum_i p_i\log\frac{p_i}{q_i}.
-\end{align}
-\lr{KL} برای آموزش مناسب است، اما fidelity برای گزارش نهایی خواناتر و bounded در بازه $[0,1]$ است.
+در این پروژه \lr{KLDivLoss} برای آموزش \lr{MLP} به کار رفته است، اما برای گزارش نهایی fidelity و \lr{L1} خواناترند.
+
+\subsection{نقش هر معیار در پروژه}
+
+\begin{table}[htbp]
+\centering
+\caption{خلاصه معیارهای ارزیابی}
+\label{tab:metrics-summary}
+\small
+\begin{tabular}{p{2.5cm}p{2.2cm}p{2.5cm}p{5.5cm}}
+\toprule
+معیار & نوع & بهتر & کاربرد در پروژه \\
+\midrule
+Fidelity & شباهت & بزرگ‌تر & گزارش نهایی، baseline، مقایسه فازها \\
+L1 & فاصله & کوچک‌تر & خطای مطلق توزیع، تفسیر فیزیکی \\
+KL & واگرایی & کوچک‌تر & زیان آموزش (\lr{KLDivLoss}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+accuracy فقط می‌گوید بیشینه احتمال درست بوده یا نه؛ اما خروجی این پروژه یک توزیع کامل ۱۶ بعدی است. fidelity و \lr{L1} کل شکل توزیع را مقایسه می‌کنند.
 
 \subsection{سه حالت مقایسه در ارزیابی}
 
@@ -518,7 +548,7 @@ accuracy فقط می‌گوید بیشینه احتمال یا برچسب نها
 قرارداد \lr{Qiskit} & transpose اشتباه ماتریس & $A_{ij}=P(m=j|p=i)$، اعمال $\mathbf{p}M$ \\
 ماتریس $16\times16$ & \lr{Aer} کانال همبسته کامل ندارد & \lr{apply\_correlated\_readout\_noise} \\
 \lr{ZZFeatureMap} یکنواخت & $F_{\mathrm{raw}}\approx0.972$، نویز کم‌اثر & افزایش \lr{reps} به ۲ \\
-نویز train/test & عملکرد بدتر از baseline & آموزش روی نویز متناسب با سخت‌افزار \\
+نویز train/test & ارزیابی cross-noise پیچیده & ارزیابی منطبق (matched) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -575,82 +605,65 @@ $\mathrm{reps}=1$
 %===============
 
 
-\subsection{جدول اصلی fidelity}
+\subsection{جدول اصلی نتایج (ارزیابی با نویز منطبق)}
+
+در ارزیابی نهایی، هر مدل آموزش‌دیده فقط روی همان نویزی آزمون می‌شود که با آن آموزش دیده است. جدول~\ref{tab:main-fidelity} baseline (بدون آموزش) را در برابر مدل آموزش‌دیده مقایسه می‌کند.
 
 \begin{table}[htbp]
 \centering
-\caption{میانگین fidelity روی دیتاست‌های test. سطرها نوع مدار و نویز آموزش، ستون‌ها نویز آزمون هستند.}
+\caption{میانگین fidelity روی test با نویز منطبق train/test.}
 \label{tab:main-fidelity}
-\begin{tabular}{lllll}
+\begin{tabular}{llccc}
 \toprule
-Circuit & TrainingNoise & Synthetic & Exp. Single & Exp. Correlated\\
+Circuit & Noise & Baseline & Trained & $\Delta F$\\
 \midrule
-\multirow{4}{*}{Independent}
-& NoTraining & 0.907 & 0.768 & 0.763\\
-& Synthetic & 0.979 & 0.829 & 0.821\\
-& Exp. Single & 0.894 & 0.977 & 0.972\\
-& Exp. Correlated & 0.874 & 0.958 & 0.971\\
+\multirow{3}{*}{Independent}
+& Synthetic & 0.907 & 0.979 & +0.072\\
+& Exp. Single & 0.768 & 0.977 & +0.209\\
+& Exp. Correlated & 0.763 & 0.971 & +0.208\\
 \midrule
-\multirow{4}{*}{ZZ FeatureMap}
-& NoTraining & 0.938 & 0.853 & 0.861\\
-& Synthetic & 0.972 & 0.892 & 0.900\\
-& Exp. Single & 0.848 & 0.934 & 0.942\\
-& Exp. Correlated & 0.841 & 0.922 & 0.963\\
+\multirow{3}{*}{ZZ FeatureMap}
+& Synthetic & 0.938 & 0.972 & +0.034\\
+& Exp. Single & 0.853 & 0.934 & +0.081\\
+& Exp. Correlated & 0.861 & 0.963 & +0.102\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{تحلیل ردیف بدون آموزش}
+\subsection{تحلیل baseline}
 
-ردیف «بدون آموزش» نشان می‌دهد نویز به تنهایی چقدر توزیع ایده‌آل را خراب می‌کند. برای مدار مستقل، fidelity نویز مصنوعی $0.907$ است، اما برای نویزهای تجربی به حدود $0.76$ افت می‌کند. این نشان می‌دهد نویز تجربی بسیار جدی‌تر از flip مصنوعی ساده است. برای مدار \lr{ZZ FeatureMap} baseline بالاتر است؛ یعنی توزیع‌های تولیدشده توسط این مدار نسبت به همین نویزها در میانگین overlap بیشتری با ایده‌آل حفظ کرده‌اند. این الزاماً به معنای ساده‌تر بودن مسئله نیست؛ شکل توزیع احتمال در مدار \lr{ZZ} متفاوت است.
+ردیف baseline نشان می‌دهد نویز به تنهایی چقدر توزیع ایده‌آل را خراب می‌کند. برای مدار مستقل، fidelity نویز مصنوعی $0.907$ است، اما برای نویزهای تجربی به حدود $0.76$ افت می‌کند. این نشان می‌دهد نویز تجربی بسیار جدی‌تر از flip مصنوعی ساده است. برای مدار \lr{ZZ FeatureMap} baselineها کمی بالاترند؛ شکل توزیع این مدار با همین نویزها overlap بیشتری با ایده‌آل حفظ می‌کند.
 
-\subsection{اهمیت هم‌خوانی نویز آموزش و آزمون}
+\subsection{اثر آموزش با نویز منطبق}
 
-بهترین نتایج عمدتاً زمانی رخ می‌دهند که نویز آموزش و آزمون یکی باشند:
+وقتی train و test روی همان کانال نویز باشند، مدل \lr{MLP} به‌طور پایدار fidelity را بالا می‌برد:
 \begin{itemize}
 	\item \lr{Independent/Synthetic}: از $0.907$ به $0.979$؛
 	\item \lr{Independent/Experimental Single}: از $0.768$ به $0.977$؛
 	\item \lr{Independent/Experimental Correlated}: از $0.763$ به $0.971$؛
 	\item \lr{ZZ/Experimental Correlated}: از $0.861$ به $0.963$.
 \end{itemize}
-این الگو نشان می‌دهد مدل \lr{MLP} واقعاً نگاشت معکوس نویز را یاد گرفته است. اگر مدل فقط smoothing یا یک تبدیل عمومی انجام می‌داد، چنین وابستگی قوی به نوع نویز آموزش دیده نمی‌شد.
+این الگو نشان می‌دهد مدل واقعاً نگاشت معکوس کانال readout را یاد گرفته است. بیشترین بهبود ($\Delta F \approx 0.21$) برای نویزهای تجربی مدار مستقل است؛ جایی که baseline پایین‌تر بوده و فضای بیشتری برای mitigation وجود داشته.
 
-\subsection{وقتی نویز آموزش و آزمون متفاوت است}
+\subsection{چرا ارزیابی منطبق؟}
 
-نتایج خارج از قطر جدول بسیار آموزنده‌اند. آموزش روی نویز مصنوعی و آزمون روی نویز تجربی عملکرد متوسطی دارد؛ مثلاً برای مدار مستقل fidelity روی \lr{Exp. Single} برابر $0.829$ است. این یعنی نویز مصنوعی برای debug مفید است، اما برای مدل‌سازی سخت‌افزار کافی نیست.
-
-از طرف دیگر، آموزش روی نویز تجربی تک‌کیوبیتی و آزمون روی نویز همبسته در مدار مستقل fidelity $0.972$ می‌دهد که بسیار خوب است. این نتیجه نشان می‌دهد بخش عمده نویز همبسته در این دیتاست هنوز از مؤلفه‌های تک‌کیوبیتی قوی تشکیل شده است. با این حال، در مدار \lr{ZZ} تفاوت‌ها مهم‌تر می‌شوند و آموزش همبسته بهترین مقدار ستون \lr{Exp. Correlated} یعنی $0.963$ را می‌دهد.
-
-یک نکته هشداردهنده نیز وجود دارد: برای \lr{ZZ FeatureMap}، مدل آموزش‌دیده روی \lr{Exp. Single} وقتی روی \lr{Synthetic} تست می‌شود fidelity $0.848$ دارد، در حالی که baseline بدون آموزش $0.938$ بوده است. پس آموزش روی نویز نامتناسب می‌تواند از عدم آموزش بدتر باشد. این نکته برای استفاده عملی بسیار مهم است: مدل mitigation باید با نویز واقعی یا حداقل نویزی نزدیک به سخت‌افزار آموزش داده شود.
+در نسخه اولیه پروژه، هر مدل روی هر سه نویز آزمون می‌شد (ماتریس $4\times3$). آن رویکرد برای مطالعه \lr{robustness} مفید بود، اما تحلیل را پیچیده می‌کرد: گاهی مدل آموزش‌دیده روی نویز A وقتی روی نویز B آزمون می‌شد، \emph{از baseline بدتر} عمل می‌کرد (مثلاً \lr{ZZ/Exp. Single} روی \lr{Synthetic}: fidelity $0.848$ در برابر baseline $0.938$). بنابراین در نسخه نهایی، ارزیابی فقط در حالت منطبق انجام می‌شود تا:
+\begin{enumerate}
+	\item سنجش مستقیم «آیا مدل کانال نویز را invert کرده؟»؛
+	\item مقایسه منصفانه baseline در برابر trained؛
+	\item گزارش ساده‌تر با جدول baseline vs trained برای هر $(\text{مدار}, \text{نویز})$.
+\end{enumerate}
 
 \subsection{بهبود نسبت به baseline}
 
-\begin{table}[htbp]
-\centering
-\caption{بهبود fidelity در حالت هم‌خوانی نویز آموزش و آزمون.}
-\label{tab:delta-fidelity}
-\begin{tabular}{llcc}
-\toprule
-مدار & نویز & baseline & بهبود پس از آموزش\\
-\midrule
-\lr{Independent} & \lr{Synthetic} & 0.907 & +0.072\\
-\lr{Independent} & \lr{Exp. Single} & 0.768 & +0.209\\
-\lr{Independent} & \lr{Exp. Correlated} & 0.763 & +0.208\\
-\lr{ZZ FeatureMap} & \lr{Synthetic} & 0.938 & +0.034\\
-\lr{ZZ FeatureMap} & \lr{Exp. Single} & 0.853 & +0.081\\
-\lr{ZZ FeatureMap} & \lr{Exp. Correlated} & 0.861 & +0.102\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-جدول~\ref{tab:delta-fidelity} نشان می‌دهد بیشترین سود یادگیری ماشین در جایی است که نویز تجربی شدیدتر بوده است. در مدار مستقل، نویز تجربی fidelity را حدود $0.76$ کرده و مدل آن را تا حدود $0.97$ برگردانده است. در مدار \lr{ZZ} baselineها بالاترند، اما مدل همچنان بهبود معنادار ایجاد می‌کند.
+جدول~\ref{tab:main-fidelity} نشان می‌دهد بیشترین سود یادگیری ماشین در جایی است که نویز تجربی شدیدتر بوده است. در مدار مستقل، نویز تجربی fidelity را حدود $0.76$ کرده و مدل آن را تا حدود $0.97$ برگردانده است ($\Delta F \approx 0.21$). در مدار \lr{ZZ} baselineها بالاترند، اما مدل همچنان بهبود معنادار ($\Delta F \approx 0.03$ تا $0.10$) ایجاد می‌کند.
 
 \section{محدودیت‌های فعلی پروژه}
 
 \begin{enumerate}
 	\item \textbf{مقیاس:} فقط ۴ کیوبیت بررسی شده؛ برای $n>4$ اندازه ماتریس $2^n\times2^n$ به‌سرعت رشد می‌کند.
 	\item \textbf{وابستگی به کالیبراسیون:} ماتریس‌های نویز snapshot فعلی سخت‌افزار هستند و drift زمانی لحاظ نشده.
-	\item \textbf{generalization محدود:} مدل وقتی train/test از نظر نویز یا مدار mismatch دارند، افت شدید نشان می‌دهد.
+	\item \textbf{ارزیابی منطبق:} در این گزارش فقط حالت train/test matched بررسی شده؛ generalization به نویز یا مدار دیگر در scope فعلی نیست.
 	\item \textbf{تقریب غیرخطی:} \lr{MLP} معکوس دقیق $M$ نیست؛ outside distribution ممکن است ضعیف عمل کند.
 	\item \textbf{نویز فقط readout:} gate error و decoherence در شبیه‌سازی لحاظ نشده‌اند.
 \end{enumerate}
@@ -663,13 +676,13 @@ Circuit & TrainingNoise & Synthetic & Exp. Single & Exp. Correlated\\
 	\item \textbf{قرارداد سطری ماتریس}: همیشه $A_{ij}=P(m=j|p=i)$ است. بنابراین اعمال نویز همبسته به صورت $\mathbf{p}_{\mathrm{ideal}}M$ انجام می‌شود.
 	\item \textbf{ماتریس $16\times16$ را با کرونکر اشتباه نگیریم}: کرونکر فقط مدل مستقل است؛ ماتریس تجربی کامل اطلاعات crosstalk و correlation را دارد.
 	\item \textbf{نویز مصنوعی کافی نیست}: برای ارزیابی واقعی، باید حداقل از \lr{experimental\_single} و بهتر از آن از \lr{experimental\_correlated} استفاده شود.
-	\item \textbf{مدل mitigation باید با شرایط آزمون سازگار باشد}: mismatch بین نویز train و test می‌تواند fidelity را از baseline پایین‌تر ببرد.
+	\item \textbf{مدل mitigation باید با شرایط آزمون سازگار باشد}: train و test باید روی همان کانال نویز باشند؛ در غیر این صورت حتی از baseline هم بدتر می‌شود.
 \end{enumerate}
 
 \section{جمع‌بندی نهایی}
 
 این پروژه یک مسیر کامل و قابل دفاع برای مطالعه نویز خوانش چهار کیوبیتی ساخته است (شکل~\ref{fig:pipeline}). در بخش اول، داده‌های خام \lr{IQ} با \lr{LDA} به بیت‌های اندازه‌گیری‌شده تبدیل می‌شوند و پس از اعتبارسنجی، ماتریس‌های تخصیص تک‌کیوبیتی و ماتریس همبسته $16\times16$ استخراج می‌شود.
 
-در بخش دوم، سه نوع نویز روی دو مدار کوانتومی اعمال می‌شود. استراتژی دیتاست طوری طراحی شده که generalization نسبت به مدار و کانال نویز نیز سنجیده شود. مدل \lr{MLP} نقش تقریب کانال معکوس readout را دارد و با fidelity، \lr{KL} و \lr{L1} ارزیابی می‌شود.
+در بخش دوم، سه نوع نویز روی دو مدار کوانتومی اعمال می‌شود. ارزیابی نهایی با \textbf{نویز منطبق train/test} انجام می‌شود: هر مدل فقط روی همان کانال نویزی آزمون می‌شود که با آن آموزش دیده است. مدل \lr{MLP} نقش تقریب کانال معکوس readout را دارد و با fidelity، \lr{KL} و \lr{L1} ارزیابی می‌شود.
 
-نتایج نشان می‌دهد mitigation در حالت هم‌خوانی train/test بسیار مؤثر است، به‌ویژه برای نویز تجربی. اما train/test mismatch می‌تواند عملکرد را از baseline پایین‌تر ببرد. برای کاربرد سخت‌افزاری، استفاده از ماتریس همبسته واقعی و طراحی دیتاست متناسب با شرایط آزمون ضروری است.
+نتایج نشان می‌دهد mitigation در حالت منطبق بسیار مؤثر است، به‌ویژه برای نویز تجربی. baseline vs trained به‌صورت مستقیم قابل مقایسه است. برای کاربرد سخت‌افزاری، استفاده از ماتریس همبسته واقعی و آموزش/آزمون روی همان کانال نویز ضروری است.

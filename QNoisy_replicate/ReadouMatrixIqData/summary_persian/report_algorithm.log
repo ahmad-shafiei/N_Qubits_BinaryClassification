@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.28)  16 JUN 2026 12:23
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.28)  20 JUN 2026 15:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1707,56 +1707,56 @@ Overfull \hbox (3.39595pt too wide) in paragraph at lines 318--319
 مچنان فرض می‌کند کانال کلی فاکتورسازی‌شده[]
  []
 
+LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
+(Font)              scaled to size 11.93546pt on input line 340.
+
+Underfull \hbox (badness 10000) in paragraph at lines 346--347
+[][]|[]\TU/lmroman10-regular(0)/m/n/10.95 Independent/ZZ[] $\OMS/cmsy/m/n/10.95
+ ^^B$ \TU/lmroman10-regular(0)/m/n/10.95 3[]
+ []
+
 
 
 [10]
-LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 11.93546pt on input line 341.
-
 
 [11]
 
 [12]
 
 [13]
-Overfull \hbox (25.33882pt too wide) in paragraph at lines 471--475
+
+[14]
+Overfull \hbox (25.33882pt too wide) in paragraph at lines 501--505
  [][][][][][] 
  []
 
 
-Overfull \hbox (25.33882pt too wide) in paragraph at lines 480--484
+Overfull \hbox (25.33882pt too wide) in paragraph at lines 510--514
  [][][][][][] 
  []
 
 
-Overfull \hbox (25.33882pt too wide) in paragraph at lines 489--493
+Overfull \hbox (25.33882pt too wide) in paragraph at lines 519--523
  [][][][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 517--518
+Underfull \hbox (badness 10000) in paragraph at lines 547--548
 [][]|\TU/XBNiloofar(0)/m/n/10.95 یکسان‌سازی []\TU/lmroman10-regular(0)/m/n/10.9
 5 bits_to_int[] \TU/XBNiloofar(0)/m/n/10.95 در[]
  []
 
 
-Overfull \hbox (22.37685pt too wide) in paragraph at lines 519--520
+Overfull \hbox (22.37685pt too wide) in paragraph at lines 549--550
 [][]|[]\TU/lmroman10-regular(0)/m/n/10.95 apply_correlated_readout_noise[]| []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 520--520
+Underfull \hbox (badness 10000) in paragraph at lines 550--550
 [][]|[]\TU/lmroman10-regular(0)/m/n/10.95 ZZFeatureMap[][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 521--522
-[][]|\TU/XBNiloofar(0)/m/n/10.95 آموزش روی نویز متناسب با[]
- []
-
-
-
-[14]
 
 [15]
 
@@ -1767,35 +1767,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 521--522
 [18]
 
 [19])
-Overfull \hbox (7.61452pt too wide) in paragraph at lines 675--21
-[]\TU/XBNiloofar(0)/m/n/12 تجربی. اما train/test mismatch می‌تواند عملکرد را از
- baseline پایین‌تر ببرد. برای کاربرد سخت‌افزاری،[]
- []
-
-
 
 [20]
 \openout2 = `bibs/bibs.aux'.
 
- (./bibs/bibs.tex
-No file report_algorithm.bbl.
-)
-runsystem(latexminted cleantemp  --timestamp 20260616122331 BFDCF20FA30EBED6D73
+ (./bibs/bibs.tex (./report_algorithm.bbl))
+runsystem(latexminted cleantemp  --timestamp 20260620154741 BFDCF20FA30EBED6D73
 2F853AE4B1386)...executed safely (allowed).
 
- (./report_algorithm.aux (./readout_noise_report.aux) (./bibs/bibs.aux))
+ (./report_algorithm.aux
+(./readout_noise_report.aux) (./bibs/bibs.aux))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `report_algorithm.out' has not changed.
-(rerunfilecheck)             Checksum: E33F1FE3617A0C74061FA15698D1D2C8;9453.
+(rerunfilecheck)             Checksum: D69989E45888A726C17B53975BBA0683;10192.
  ) 
 Here is how much of TeX's memory you used:
- 37800 strings out of 473831
- 805155 string characters out of 5733136
- 1357018 words of memory out of 5000000
- 60141 multiletter control sequences out of 15000+600000
+ 37806 strings out of 473831
+ 805249 string characters out of 5733136
+ 1360903 words of memory out of 5000000
+ 60144 multiletter control sequences out of 15000+600000
  572279 words of font info for 121 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  91i,15n,96p,1219b,839s stack positions out of 10000i,1000n,20000p,200000b,200000s
