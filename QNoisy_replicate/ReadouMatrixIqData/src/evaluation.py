@@ -12,9 +12,23 @@ TRAINING_NOISE_TO_MODE = {
     "Experimental Correlated": "experimental_correlated",
 }
 
+MODE_TO_TRAINING_NOISE = {v: k for k, v in TRAINING_NOISE_TO_MODE.items()}
+
+
+def make_test_sets(synthetic=None, experimental_single=None, experimental_correlated=None):
+    """Build a test_sets dict from optional (X, Y) pairs."""
+    out = {}
+    if synthetic is not None:
+        out["synthetic"] = synthetic
+    if experimental_single is not None:
+        out["experimental_single"] = experimental_single
+    if experimental_correlated is not None:
+        out["experimental_correlated"] = experimental_correlated
+    return out
+
 
 def matched_noise_modes(training_noise):
-    """Return test noise mode(s) aligned with training condition."""
+    """Noise mode(s) to evaluate for a given training condition."""
     if training_noise == "No Training":
         return NOISE_MODES
     return [TRAINING_NOISE_TO_MODE[training_noise]]
@@ -23,21 +37,21 @@ def matched_noise_modes(training_noise):
 def evaluate_phase(model, X_test, Y_test):
     X_test = torch.tensor(X_test, dtype=torch.float32)
     model.eval()
-
     with torch.no_grad():
         preds = model(X_test).numpy()
-
     return compute_metrics(preds, Y_test)
 
 
 def run_matched_tests(model, experiments, circuit, training_noise, test_sets):
-    """Register metrics on test noise matched to training noise.
+    """Register metrics on test_sets restricted to training_noise policy.
 
-    Baseline (No Training) is evaluated on all three noise types.
-    Trained models are evaluated only on the same noise used in training.
+    - No Training  -> all keys present in test_sets (should be 3 noises)
+    - Trained phase -> only the noise matching training_noise
     """
-    for noise_mode in matched_noise_modes(training_noise):
-        X_test, Y_test = test_sets[noise_mode]
+    allowed = set(matched_noise_modes(training_noise))
+    for noise_mode, (X_test, Y_test) in test_sets.items():
+        if noise_mode not in allowed:
+            continue
         metrics = evaluate_phase(model, X_test, Y_test)
         experiments[(circuit, training_noise)].append({
             "Dataset": noise_mode,
@@ -45,7 +59,6 @@ def run_matched_tests(model, experiments, circuit, training_noise, test_sets):
         })
 
 
-# Backward-compatible alias
 run_all_tests = run_matched_tests
 
 
@@ -69,7 +82,7 @@ def evaluate_model(model, X, Y):
 
 
 def evaluate_matched_phase(model, training_noise, test_sets):
-    """Per-phase helper: evaluate only on noise matched to training."""
+    """Evaluate model only on noise matched to training_noise."""
     results = {}
     for mode in matched_noise_modes(training_noise):
         X_test, Y_test = test_sets[mode]
