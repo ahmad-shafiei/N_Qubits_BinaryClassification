@@ -1,710 +1,293 @@
-# Quantum Readout Noise Modeling and Dataset Generation Project
+# Quantum Readout Noise Modeling and Dataset Generation
 
 ## Project Overview
 
-This project focuses on modeling and learning quantum readout noise for 4-qubit quantum systems using both:
+This project models **4-qubit readout noise** from real experimental IQ data and uses the extracted matrices to generate machine-learning datasets from noisy quantum circuit simulations.
 
-1. Real experimental IQ measurement data
-2. Simulated noisy quantum circuits
+The workflow has two main parts:
 
-The workflow is divided into two major sections:
+| Part | Notebook / CLI | Output |
+|------|----------------|--------|
+| **1 — Readout extraction** | `readout_matrix.ipynb`, `scripts/run_readout_matrix.py` | `noise_matrix_results/res_<snapshot>/` |
+| **2 — ML datasets & training** | `noisy_4q_zzfeaturemap.ipynb`, `scripts/build_ml_datasets.py` | `DataTrain/<snapshot>/` |
 
-- Part 1: Experimental Readout Noise Extraction
-- Part 2: Noisy Quantum Circuit Dataset Generation
+**Rule:** always complete Part 1 for a snapshot before building datasets or training models on experimental noise.
+
+---
+
+## Directory Layout (current)
+
+```
+ReadouMatrixIqData/
+├── quadrature_data_4qubits/          # experimental IQ input (per snapshot)
+│   └── 1_1_2025/
+│       ├── 0000.txt … 1111.txt       # 16 prepared basis states
+│
+├── noise_matrix_results/             # extracted readout matrices
+│   └── res_1_1_2025/
+│       ├── assignment_matrix_q1.txt … q4.txt
+│       ├── noise_matrix_16x16.txt
+│       └── plots / .npy (optional)
+│
+├── DataTrain/                        # ML datasets (per snapshot)
+│   └── 1_1_2025/
+│       ├── independent/
+│       │   ├── synthetic/
+│       │   ├── experimental_single/
+│       │   └── experimental_correlated/
+│       └── zz_featuremap/
+│           └── …
+│
+├── src/
+│   ├── readout_extraction/           # Part 1 pipeline (config, data, matrix, plots)
+│   ├── generate_and_save_datasets.py # single-dataset build/load
+│   ├── ml_dataset_pipeline.py        # batch build for one snapshot
+│   ├── noises.py                     # loads matrices from res_<snapshot>
+│   ├── circuits.py, metrics.py, evaluation.py, dashboard.py
+│
+├── scripts/
+│   ├── run_readout_matrix.py         # CLI for Part 1
+│   └── build_ml_datasets.py          # CLI for Part 2 dataset generation
+│
+├── readout_matrix.ipynb              # Part 1 (interactive)
+└── noisy_4q_zzfeaturemap.ipynb     # Part 2 (datasets + model experiments)
+```
+
+### Snapshot concept
+
+Each **snapshot** (e.g. `1_1_2025`) is one experimental measurement campaign:
+
+- **Input:** `quadrature_data_4qubits/<snapshot>/`
+- **Noise matrices:** `noise_matrix_results/res_<snapshot>/`
+- **ML data:** `DataTrain/<snapshot>/`
+
+Set the active snapshot in Python:
+
+```python
+from src.readout_extraction.config import set_active_snapshot
+set_active_snapshot("1_1_2025")
+```
+
+Or via environment: `NOISE_SNAPSHOT=1_1_2025`
 
 ---
 
 # Part 1 — Experimental Readout Noise Extraction
 
-## Main Goal
+## Goal
 
-The first part of the project extracts:
+From IQ measurement clouds, extract:
 
-- Single-qubit readout assignment matrices (2×2)
-- Full correlated 4-qubit readout noise matrix (16×16)
+- **Single-qubit assignment matrices** (2×2 per qubit)
+- **Correlated 4-qubit readout matrix** (16×16)
 
-from real experimental IQ measurement data.
+Convention (Qiskit-compatible):
 
-The generated matrices are later used as realistic noise models for quantum circuit simulation and machine learning dataset generation.
+`A[i,j] = P(measured = j | prepared = i)` — rows sum to 1.
 
----
+## Input data
 
-# Main Notebook
+Each file `0000.txt` … `1111.txt` in a snapshot folder contains:
 
-## File
+- 4 lines (one per qubit)
+- 1000 complex IQ samples per line (`I + iQ`)
 
-readout_matrix.ipynb
+Total per snapshot: 16 states × 1000 shots = **16 000 samples**, shape `(16000, 4)`.
 
-This notebook is responsible for:
+## Pipeline steps
 
-- Loading experimental IQ data
-- Parsing complex-valued readout samples
-- Training qubit state classifiers
-- Constructing single-qubit readout matrices
-- Building the correlated 16×16 readout noise matrix
-- Visualizing the extracted noise
-- Saving all extracted matrices to disk
+1. **Load** — `load_all_data(config)` from `src/readout_extraction/data.py`
+2. **Visualize** — IQ clouds, state overlays (`plots.py`)
+3. **Train classifiers** — LDA (or QDA) on `[I, Q]` per qubit
+4. **Build 16×16 matrix** — from full-dataset predictions
+5. **Validate & save** — row sums, diagonal fidelities
+6. **Compare** — correlated vs Kronecker-independent approximation
 
----
+## How to run
 
-# Experimental Dataset Structure
+**CLI (recommended for batch):**
 
-## Input Directory
+```bash
+python scripts/run_readout_matrix.py --list
+python scripts/run_readout_matrix.py --snapshot 1_1_2025
+python scripts/run_readout_matrix.py --all
+```
 
-./quadrature_data_4qubits
+**Notebook:** `readout_matrix.ipynb` — set `SNAPSHOT`, run Setup, then step cells or `run_readout_pipeline(config)`.
 
-This directory contains:
+## Outputs
 
-0000.txt
-0001.txt
-0010.txt
-...
-1111.txt
+Under `noise_matrix_results/res_<snapshot>/`:
 
-A total of 16 files corresponding to all possible prepared computational basis states of 4 qubits.
+| File | Role |
+|------|------|
+| `assignment_matrix_q1.txt` … `q4.txt` | per-qubit readout errors |
+| `noise_matrix_16x16.txt` | full correlated readout matrix |
+| heatmaps / comparison plots | diagnostics |
 
----
-
-# Structure of Each Experimental File
-
-Each file contains:
-
-- 4 lines
-- Each line corresponds to one qubit
-- Each line contains 1000 complex IQ samples
-
-Therefore:
-
-(4 qubits) × (1000 shots)
-
-per prepared basis state.
+These files are consumed by `src/noises.py` in Part 2.
 
 ---
 
-# IQ Data Representation
+# Part 2 — Noisy Circuit Datasets & Model Training
 
-The measurement data are stored as complex numbers:
+## Goal
 
-I + iQ
+Generate datasets where:
 
-where:
+- **X** = noisy 16-dim probability vectors
+- **Y** = ideal probability vectors
+- **THETAS** = circuit parameters
 
-- Real part → I quadrature
-- Imaginary part → Q quadrature
+Then train/evaluate mitigation models across noise regimes.
 
-The parser function:
+## Circuits
 
-parse_complex_string()
+| `circuit_type` | Builder | Notes |
+|----------------|---------|-------|
+| `independent` | `build_circuit_independent()` | independent RY rotations |
+| `zz_featuremap` | `build_zzfeaturemap_circuit()` | Qiskit ZZFeatureMap, typically `reps=2` |
 
-converts the textual representation into np.complex128 objects.
+## Noise modes
 
----
+| `noise_mode` | Source | Application |
+|--------------|--------|-------------|
+| `synthetic` | fixed p01/p10 | Qiskit `ReadoutError` in Aer |
+| `experimental_single` | `assignment_matrix_q*.txt` | per-qubit experimental matrices |
+| `experimental_correlated` | `noise_matrix_16x16.txt` | **manual** on probability vectors (`p_noisy = p_ideal @ A16`) |
 
-# Important Experimental Pipeline
+> Aer cannot apply a full 16×16 correlated readout matrix directly; correlated experimental noise is always applied post-simulation.
 
-## Step 1 — Load Experimental Files
+## Dataset layout
 
-Main function:
+```
+DataTrain/<snapshot>/<circuit_type>/<noise_mode>/
+    X_train.npy, Y_train.npy, theta_train.npy
+    X_validation.npy, …
+    X_test.npy, …
+```
 
-load_all_data()
+Standard job recipe (17 datasets): see `STANDARD_ML_DATASET_JOBS` in `src/ml_dataset_pipeline.py`.
 
-Responsibilities:
+- **train:** 4500 samples
+- **validation / test:** 1500 samples
 
-- Load all 16 prepared-state files
-- Preserve ordering of basis states
-- Build:
-  - X → IQ data
-  - Y → prepared labels
+## How to build datasets
 
-Final dataset shapes:
+**CLI:**
 
-X.shape = (16000, 4)
-Y.shape = (16000, 4)
+```bash
+python scripts/build_ml_datasets.py --list
+python scripts/build_ml_datasets.py --snapshot 1_1_2025
+python scripts/build_ml_datasets.py --snapshot 1_1_2025 --dry-run
+python scripts/build_ml_datasets.py --snapshot 1_1_2025 --skip-existing
+python scripts/build_ml_datasets.py --snapshot 1_1_2025 --noise experimental_single --circuit independent
+```
 
-because:
+**Python:**
 
-16 states × 1000 shots = 16000 samples
+```python
+from src.ml_dataset_pipeline import build_datasets_for_snapshot
+build_datasets_for_snapshot("1_1_2025", skip_existing=True)
+```
 
----
+**Single dataset (manual):**
 
-## Step 2 — IQ Cloud Visualization
+```python
+from src.generate_and_save_datasets import build_and_save_dataset
+build_and_save_dataset(
+    num_samples=1500,
+    split="test",
+    circuit_type="independent",
+    noise_mode="experimental_single",
+    snapshot_id="1_1_2025",
+)
+```
 
-Main function:
+**Load:**
 
-plot_qubit_iq_clouds()
+```python
+from src.generate_and_save_datasets import load_dataset
+X, Y, TH = load_dataset("test", "independent", "experimental_single")
+```
 
-Purpose:
+Paths resolve via `get_active_snapshot()` / `DATA_SNAPSHOT`.
 
-- Visualize separation between |0⟩ and |1⟩ measurement clouds for each qubit.
+## Notebook: `noisy_4q_zzfeaturemap.ipynb`
 
-This visualization is critical for:
+Sections:
 
-- Understanding readout quality
-- Estimating overlap between states
-- Validating classifier performance
-
----
-
-## Step 3 — Single-Qubit Classifier Training
-
-Main function:
-
-train_single_qubit_classifier()
-
-Classifier used:
-
-LinearDiscriminantAnalysis
-
-Features:
-
-[I, Q]
-
-Labels:
-
-0 or 1
-
-Outputs:
-
-- Classification accuracy
-- Confusion matrix
-- Single-qubit assignment matrix
-
----
-
-# Single-Qubit Assignment Matrix
-
-Each qubit produces a 2×2 assignment matrix with Qiskit-compatible convention:
-
-A[i,j] = P(measured=j | prepared=i)
-
-Properties:
-
-- Row-stochastic matrix
-- Rows sum to 1
-- Diagonal entries represent readout fidelity
-
-Saved files:
-
-noise_matrix_results/
-    assignment_matrix_q1.npy
-    assignment_matrix_q2.npy
-    assignment_matrix_q3.npy
-    assignment_matrix_q4.npy
-
----
-
-# Step 4 — Build Full Correlated 16×16 Noise Matrix
-
-Main function:
-
-build_noise_matrix()
-
-Purpose:
-
-Construct:
-
-M[i,j] = P(measured=j | prepared=i)
-
-for all 16 prepared states.
-
-This matrix captures:
-
-- Correlated readout effects
-- Multi-qubit readout correlations
-- Crosstalk effects
-- Non-factorizable measurement errors
-
----
-
-# Saved Outputs
-
-## Output Directory
-
-./noise_matrix_results
-
-Generated files include:
-
-- assignment_matrix_q1.npy
-- assignment_matrix_q2.npy
-- assignment_matrix_q3.npy
-- assignment_matrix_q4.npy
-- noise_matrix_16x16.npy
-- noise_matrix_16x16.txt
-- noise_matrix_heatmap.png
-
----
-
-# Part 2 — Noisy Quantum Circuit Dataset Generation
-
-## Main Goal
-
-The second major section of the project generates:
-
-- Ideal probability distributions
-- Noisy probability distributions
-- Training datasets
-- Test datasets
-
-for quantum machine learning and readout-noise mitigation experiments.
-
----
-
-# Main Notebook
-
-## File
-
-noisy_4q_zzfeaturemap.ipynb
-
-This notebook contains:
-
-- Quantum circuit definitions
-- Noise model construction
-- Qiskit simulation
-- Correlated noise application
-- Dataset generation
-- Dataset saving/loading utilities
-
----
-
-# Quantum Circuits Used in the Project
-
-## Circuit Family 1 — Independent RY Circuit
-
-Main function:
-
-build_circuit_independent()
-
-Circuit structure:
-
-Ry(theta_i)
-
-applied independently to each qubit.
-
-Characteristics:
-
-- No entanglement
-- Independent qubit rotations
-- Simple probability structure
-
----
-
-## Circuit Family 2 — ZZFeatureMap Circuit
-
-Main function:
-
-build_zzfeaturemap_circuit()
-
-Uses Qiskit's zz_feature_map.
-
-Features:
-
-- Standard quantum feature map
-- Quantum machine learning oriented
-- Supports configurable reps and entanglement
-
----
-
-# Noise Models
-
-## Noise Mode 1 — Synthetic Noise
-
-Mode name:
-
-synthetic
-
-Implemented using:
-
-ReadoutError
-
-with configurable p01 and p10.
-
-Meaning:
-
-- 0 → 1 flip probability
-- 1 → 0 flip probability
-
----
-
-## Noise Mode 2 — Experimental Single-Qubit Noise
-
-Mode name:
-
-experimental_single
-
-Uses experimentally extracted 2×2 assignment matrices loaded from:
-
-noise_matrix_results/
-
-Each qubit receives its own experimentally calibrated readout error.
-
----
-
-## Noise Mode 3 — Experimental Correlated Noise
-
-Mode name:
-
-experimental_correlated
-
-Uses the 16×16 correlated readout matrix.
-
-Important limitation:
-
-Qiskit Aer cannot directly apply full correlated readout matrices.
-
-Therefore:
-
-- Correlated noise is applied manually
-- Noise is applied directly to probability vectors
-
-Main function:
-
-apply_correlated_readout_noise()
-
-Core equation:
-
-p_noisy = p_ideal @ A16
-
-where:
-
-A16[i,j] = P(measured=j | prepared=i)
-
----
-
-# Probability Representation
-
-The simulator converts measurement counts into 16-dimensional probability vectors using:
-
-counts_to_probs_4q()
-
-Ordering convention:
-
-0000 → index 0
-...
-1111 → index 15
-
-This ordering must remain consistent everywhere in the project.
-
----
-
-# Dataset Generation Pipeline
-
-Main function:
-
-generate_dataset()
-
-For each sample:
-
-1. Random angles are generated
-2. Quantum circuit is built
-3. Ideal distribution is simulated
-4. Noise is applied
-5. Input/output pair is stored
-
-Final dataset contents:
-
-- X → noisy probabilities
-- Y → ideal probabilities
-- THETAS → circuit parameters
-
----
-
-# Dataset Storage Structure
-
-## Root Directory
-
-./DataTrain
-
-Datasets are organized hierarchically:
-
-DataTrain/
-    independent/
-        synthetic/
-        experimental_single/
-        experimental_correlated/
-
-    zz_featuremap/
-        synthetic/
-        experimental_single/
-        experimental_correlated/
-
-Each directory contains:
-
-- X_train.npy
-- Y_train.npy
-- theta_train.npy
-- X_test.npy
-- Y_test.npy
-- theta_test.npy
-
----
-
-# Important Project Conventions
-
-## 1. Bit Ordering Convention
-
-Critical conversion functions:
-
-- bits_to_int()
-- int_to_bits()
-
-The project uses:
-
-q1 + 2*q2 + 4*q3 + 8*q4
-
-This convention must remain consistent everywhere.
-
----
-
-## 2. Qiskit Noise Matrix Convention
-
-The project follows:
-
-M[i,j] = P(measured=j | prepared=i)
-
-Therefore:
-
-- Rows = prepared states
-- Columns = measured states
-- Rows sum to 1
-
----
-
-## 3. Correlated Noise Is Applied Manually
-
-Very important architectural detail:
-
-Qiskit Aer cannot directly implement full correlated 16×16 readout errors.
-
-Therefore experimental_correlated must always use:
-
-apply_correlated_readout_noise()
-
----
-
-# Critical Files Summary
-
-## Experimental Readout Extraction
-
-readout_matrix.ipynb
-
-Responsible for:
-
-- Reading experimental IQ data
-- Training classifiers
-- Extracting assignment matrices
-- Building correlated 16×16 noise matrix
-
----
-
-## Noisy Dataset Generation
-
-noisy_4q_zzfeaturemap.ipynb
-
-Responsible for:
-
-- Quantum circuit generation
-- Noise model creation
-- Applying synthetic/experimental noise
-- Dataset generation
-- Dataset saving/loading
+1. **Setup** — imports, `DATA_SNAPSHOT`, seed
+2. **Dataset generation** — run before any training phase
+3. **Tests** — sanity checks on circuits/noise
+4. **Phases 0–3** — train/validate/test experiments per circuit × noise combination
+5. **Organize outputs** — `make_test_sets`, summary tables, dashboards (`figs/`)
 
 ---
 
 # Recommended Execution Order
 
-## Step 1
+```
+1. Place IQ files  →  quadrature_data_4qubits/<snapshot>/
+2. Extract matrices →  python scripts/run_readout_matrix.py --snapshot <snapshot>
+3. Build datasets   →  python scripts/build_ml_datasets.py --snapshot <snapshot>
+4. Set snapshot     →  set_active_snapshot("<snapshot>") or DATA_SNAPSHOT in notebook
+5. Train / evaluate →  noisy_4q_zzfeaturemap.ipynb (phases)
+```
 
-Run:
-
-readout_matrix.ipynb
-
-to generate:
-
-noise_matrix_results/
-
----
-
-## Step 2
-
-Run:
-
-noisy_4q_zzfeaturemap.ipynb
-
-using generated noise matrices.
+For a new snapshot `2_2_2025`: repeat steps 1–4, then point training cells at the new data.
 
 ---
 
-# Final Notes for Cursor Agent
+# Critical Conventions
 
-The Cursor agent should treat the following as highly sensitive and important:
-
-1. Bit ordering consistency
-2. Probability vector ordering
-3. Qiskit row-stochastic convention
-4. Correct application of correlated noise
-5. Stable directory structure
-6. Consistent dataset naming
-7. Experimental matrices must be generated before dataset creation
-8. Correlated noise is manually applied
-9. All probability vectors are 16-dimensional
-10. Experimental IQ data are complex-valued
-
-# ============================
-# 📊 METRICS SYSTEM
-# ============================
-
-All models are evaluated using:
-
-- FidelityMean
-- L1Mean
-- KLMean
-
-Defined as:
-
-- Fidelity = (Σ √(p*y))²
-- L1 = Σ |p - y|
-- KL = Σ y log(y/p)
+1. **Bit ordering:** `q1 + 2*q2 + 4*q3 + 8*q4` — use `bits_to_int()` / `int_to_bits()` consistently.
+2. **Probability index:** `0000 → 0`, …, `1111 → 15` in `counts_to_probs_4q()`.
+3. **Matrix convention:** rows = prepared, columns = measured; rows stochastic.
+4. **Correlated noise:** always `apply_correlated_readout_noise()` for `experimental_correlated`.
+5. **Snapshot alignment:** IQ folder, `res_<snapshot>`, and `DataTrain/<snapshot>` must share the same id.
 
 ---
 
-# ============================
-# ⚠️ CURRENT IMPLEMENTATION ISSUE
-# ============================
+# Evaluation Metrics
 
-## ❗ Problem
+Models are evaluated with:
 
-The current system:
+- **FidelityMean** — \((\sum \sqrt{p \cdot y})^2\)
+- **L1Mean** — \(\sum |p - y|\)
+- **KLMean** — \(\sum y \log(y/p)\)
 
-✔ correctly computes metrics  
-✔ correctly trains models  
-✔ correctly builds experiments  
-
-BUT:
-
-### ❌ Visualization + Dashboard system is NOT fully generalized
-
-Specifically:
-
-1. `build_summary_df()` is partially metric-specific
-2. `full_dashboard()` assumes only Fidelity-like structure
-3. Table rendering is not dynamically switchable between metrics
-4. Manual filtering is currently required
+Dashboard outputs: `figs/` folder; summary tables via `src/dashboard.py`.
 
 ---
 
-# ============================
-# 🎯 REQUIRED UPGRADE TASK
-# ============================
+# Key Source Modules
 
-The system must be refactored so that:
-
-## 1. Summary Table
-
-The same pipeline must support:
-
-- FidelityMean
-- L1Mean
-- KLMean
-
-WITHOUT modifying experiment reruns.
+| Module | Responsibility |
+|--------|----------------|
+| `src/readout_extraction/` | IQ loading, LDA/QDA, matrix build, plots, `run_readout_pipeline` |
+| `src/noises.py` | load experimental matrices; build Aer noise models |
+| `src/generate_and_save_datasets.py` | simulate circuits, generate/save/load one dataset |
+| `src/ml_dataset_pipeline.py` | orchestrate all standard datasets for a snapshot |
+| `src/circuits.py` | independent & ZZFeatureMap builders |
+| `src/evaluation.py` | test-set packaging for experiments |
+| `src/dashboard.py` | summary tables and heatmap dashboards |
 
 ---
 
-## 2. Dashboard System
+# Notes for Developers / AI Agents
 
-The function:
+**Do not break:**
 
-```python
-full_dashboard(summary_df)
+- snapshot path layout (`quadrature_data_4qubits/<id>`, `res_<id>`, `DataTrain/<id>`)
+- bit/probability ordering
+- manual correlated-noise path for `experimental_correlated`
+- row-stochastic matrix convention
 
-must be upgraded to:
+**Safe to extend:**
 
-full_dashboard(summary_df, metric="FidelityMean")
+- new snapshots (add folder + run both CLIs)
+- visualization / dashboard metric switching (post-processing only)
+- additional circuit types or noise modes (update `STANDARD_ML_DATASET_JOBS` and `noises.py`)
 
-or:
-
-full_dashboard(summary_df, metric="L1Mean")
-
-or:
-
-full_dashboard(summary_df, metric="KLMean")
-3. Table System
-
-Must support:
-
-show_summary_table(summary_df, metric="L1Mean")
-============================
-🧠 REQUIRED FUNCTION BEHAVIOR
-============================
-build_summary_df()
-
-Must:
-
-store ALL metrics per dataset
-NOT hardcode Fidelity only
-keep structure:
-
-(Circuit, Training Noise) → {Synthetic, Experimental Single, Experimental Correlated}
-
-full_dashboard()
-
-Must:
-
-accept metric argument
-dynamically select metric columns
-generate circuit-wise heatmaps
-enforce row order:
-
-No Training → Synthetic → Experimental Single → Experimental Correlated
-
-run_all_tests()
-
-Must:
-
-remain unchanged logically
-only feed metrics into register_results()
-============================
-🔥 CRITICAL DESIGN RULE
-============================
-
-❗ No experiment re-run should be required when switching metric visualization.
-
-All metrics must be computed once and reused.
-
-============================
-📌 FINAL GOAL
-============================
-
-After refactor, user should be able to:
-
-summary_df = build_summary_df(EXPERIMENTS)
-
-show_summary_table(summary_df, "KLMean")
-full_dashboard(summary_df, metric="L1Mean")
-
-WITHOUT:
-
-recomputation
-retraining
-data reload
-============================
-🤖 AGENT INSTRUCTIONS
-============================
-dshboards output for fidelities are avalaible at folder named figs. 
-also table of output for the fidelity metrices might be available in the 
-jupyter notebook code. 
-
-If you are an AI agent working on this project:
-
-Prioritize fixing build_summary_df schema first
-Then refactor full_dashboard
-Ensure metric-agnostic design
-Avoid breaking existing Fidelity pipeline
-Preserve ordering constraints strictly
-Do NOT modify dataset generation or quantum circuits
-Focus ONLY on post-processing + visualization layer
-============================
-END OF SPEC
-============================
-
----
+**Legacy:** flat `DataTrain/independent/...` (without snapshot) was migrated to `DataTrain/1_1_2025/...`. Old paths should not be used for new work.

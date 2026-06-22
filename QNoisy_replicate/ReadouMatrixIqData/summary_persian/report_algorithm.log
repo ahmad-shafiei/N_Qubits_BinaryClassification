@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.28)  21 JUN 2026 15:05
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.28)  22 JUN 2026 12:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1593,16 +1593,19 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 9.
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (15.25388pt too wide) in paragraph at lines 9--10
-[][][]\TU/lmroman10-regular(0)/m/n/12 readout_matrix.ipynb[]\TU/XBNiloofar(0)/m
-/n/12 : بارگذاری داده‌های تجربی، آموزش تفکیک‌کننده []\TU/lmroman10-regular(0)/m
-/n/12 IQ[]\TU/XBNiloofar(0)/m/n/12 ، استخراج ماتریس‌های[]
+Overfull \hbox (12.12807pt too wide) in paragraph at lines 9--10
+[][]\TU/XBNiloofar(0)/m/n/12 ماژول های خوانش داده ها استخراج ماتریس های نویز: ب
+ارگذاری داده‌های تجربی، آموزش تفکیک‌کننده[]
  []
 
+LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
+(Font)              scaled to size 13.07996pt on input line 13.
+LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/it' will be
+(Font)              scaled to size 13.07996pt on input line 21.
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 8.71997pt on input line 15.
+(Font)              scaled to size 8.71997pt on input line 25.
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 6.53998pt on input line 15.
+(Font)              scaled to size 6.53998pt on input line 25.
 
 
 [1
@@ -1611,107 +1614,81 @@ LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
 
 
 ]
-LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
-(Font)              scaled to size 13.07996pt on input line 61.
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 15.69594pt on input line 70.
+(Font)              scaled to size 15.69594pt on input line 78.
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/b/n' will be
-(Font)              scaled to size 15.69594pt on input line 70.
+(Font)              scaled to size 15.69594pt on input line 78.
 
 
 [2]
+
+[3]
 File: figs/clouds.png Graphic file (type bmp)
 <figs/clouds.png>
 
 
-[3]
-
 [4]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 136.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 136.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 136.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 157.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 157.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 157.
-
+File: figs/guassian_ellipses.png Graphic file (type bmp)
+<figs/guassian_ellipses.png>
 
 
 [5]
-LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/it' will be
-(Font)              scaled to size 13.07996pt on input line 188.
+
+[6]
+
+[7]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 242.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 216.
+(hyperref)                removing `\times' on input line 242.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 216.
+(hyperref)                removing `math shift' on input line 242.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 216.
+(hyperref)                removing `math shift' on input line 242.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 216.
+(hyperref)                removing `\times' on input line 242.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 216.
+(hyperref)                removing `math shift' on input line 242.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 216.
-
-
-Overfull \hbox (9.20341pt too wide) in paragraph at lines 218--219
+Overfull \hbox (9.20341pt too wide) in paragraph at lines 244--245
 []\TU/XBNiloofar(0)/m/n/12 اگر خطای خوانش چهار کیوبیت کاملاً مستقل بود، ماتریس 
 کامل از کرونکر محصول ماتریس‌های تک‌کیوبیتی[]
  []
 
 
 
-[6]
+[8]
 File: figs/independent_circuit.png Graphic file (type bmp)
 <figs/independent_circuit.png>
 
 
-[7]
+[9]
 File: figs/zzfeaturemap_circuit.png Graphic file (type bmp)
 <figs/zzfeaturemap_circuit.png>
 
 
-[8]
-Overfull \hbox (23.09286pt too wide) in paragraph at lines 295--296
-[]\TU/XBNiloofar(0)/m/n/12 در پروژه، مدار []\TU/lmroman10-regular(0)/m/n/12 ZZ[
-] \TU/XBNiloofar(0)/m/n/12 با تابع استاندارد []\TU/lmroman10-regular(0)/m/n/12 
-zz_feature_map[] \TU/XBNiloofar(0)/m/n/12 ساخته می‌شود و پارامترهای $\OML/cmm/m
-/it/12 ^^R[]$ \TU/XBNiloofar(0)/m/n/12 با []\TU/lmroman10-regular(0)/m/n/12 ass
-ign_parameters[][]
+[10]
+Overfull \hbox (0.43025pt too wide) in paragraph at lines 321--322
+[]\TU/XBNiloofar(0)/m/n/12 نمونه زیر الگوی چهارکیوبیتی پروژه را نشان می‌دهد؛ بر
+ای مرور سریع بعدی، شناسه‌های اصلی در کامنت‌های[]
  []
 
 \pydata@fh@_BFDCF20FA30EBED6D732F853AE4B1386.data.minted=\write7
 \openout7 = `_BFDCF20FA30EBED6D732F853AE4B1386.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260621150503 BFDCF20FA30EBED6D732F8
+runsystem(latexminted config  --timestamp 20260622124152 BFDCF20FA30EBED6D732F8
 53AE4B1386)...executed safely (allowed).
 
 
@@ -1724,7 +1701,7 @@ See the minted package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.297 ..._zz_featuremap_4q.py}{code:zz-featuremap}
+l.323 ..._zz_featuremap_4q.py}{code:zz-featuremap}
                                                   
 This error message was generated by an \errmessage
 command, so I can't give any explicit help.
@@ -1732,84 +1709,60 @@ Pretend that you're Hercule Poirot: Examine all clues,
 and deduce the truth by order and method.
 
 (./_minted/default.style.minted)
-(./_minted/AE9A3BB33151E09B5439A75604C993D3.highlight.minted
-
-[9]
+(./_minted/73ECE3FBA81226CDB07FBC1C80633622.highlight.minted
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `TU/lmtt/b/n' tried instead on input line 3.
-)
 
-[10] (./_minted/2E5D013F66B2ADBD099418CDD0A6346A.highlight.minted
 
-[11])
-Overfull \hbox (44.2324pt too wide) in paragraph at lines 323--324
-[][]\TU/XBNiloofar(0)/m/n/12 در پروژه چهارکیوبیتی، همین الگو در حلقه []\TU/lmro
-man10-regular(0)/m/n/12 for q in range(4)[] \TU/XBNiloofar(0)/m/n/12 تکرار می‌ش
-ود. برای نویز []\TU/lmroman10-regular(0)/m/n/12 experimental_single[]\TU/XBNilo
-ofar(0)/m/n/12 ،[]
- []
+[11]) (./_minted/48C9F53C95B3DA1AACF5B09BB2A88062.highlight.minted
 
+[12])
+
+[13]
 LaTeX Font Info:    Font shape `TU/XBNiloofar(0)/m/n' will be
-(Font)              scaled to size 11.93546pt on input line 350.
+(Font)              scaled to size 11.93546pt on input line 376.
 
-Underfull \hbox (badness 10000) in paragraph at lines 356--357
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
 [][]|[]\TU/lmroman10-regular(0)/m/n/10.95 Independent/ZZ[] $\OMS/cmsy/m/n/10.95
  ^^B$ \TU/lmroman10-regular(0)/m/n/10.95 3[]
  []
 
 
 
-[12]
-
-[13]
-
 [14]
 
 [15]
 
 [16]
-Overfull \hbox (25.33882pt too wide) in paragraph at lines 511--515
- [][][][][][] 
- []
 
-
-Overfull \hbox (25.33882pt too wide) in paragraph at lines 520--524
- [][][][][][] 
- []
-
-
-Overfull \hbox (25.33882pt too wide) in paragraph at lines 529--533
- [][][][][][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 557--558
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 570--571
 [][]|\TU/XBNiloofar(0)/m/n/10.95 یکسان‌سازی []\TU/lmroman10-regular(0)/m/n/10.9
 5 bits_to_int[] \TU/XBNiloofar(0)/m/n/10.95 در[]
  []
 
 
-Overfull \hbox (22.37685pt too wide) in paragraph at lines 559--560
+Overfull \hbox (22.37685pt too wide) in paragraph at lines 572--573
 [][]|[]\TU/lmroman10-regular(0)/m/n/10.95 apply_correlated_readout_noise[]| []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 560--560
+Underfull \hbox (badness 10000) in paragraph at lines 573--573
 [][]|[]\TU/lmroman10-regular(0)/m/n/10.95 ZZFeatureMap[][]
  []
 
 
 
-[17]
-
 [18]
 
 [19]
+
+[20]
 File: figs/fidelity_ind.png Graphic file (type bmp)
 <figs/fidelity_ind.png>
 
 
-[20]
+[21]
 File: figs/fidelity_zz.png Graphic file (type bmp)
 <figs/fidelity_zz.png>
 File: figs/all_metrices_ind.png Graphic file (type bmp)
@@ -1818,38 +1771,60 @@ File: figs/all_metrices_zz.png Graphic file (type bmp)
 <figs/all_metrices_zz.png>
 
 
-[21]
-
 [22]
+
+[23]
 File: figs/visualize_aligned_fidelity_zz_corr_.png Graphic file (type bmp)
 <figs/visualize_aligned_fidelity_zz_corr_.png>
 
 
-[23]
+LaTeX Warning: Reference `fig:dist-reconstruction' on page 24 undefined on inpu
+t line 729.
 
-[24])
+
+
+[24]
 
 [25]
+Underfull \hbox (badness 1331) in paragraph at lines 772--772
+[][]|\TU/XBNiloofar(0)/m/n/10.95 محدودیت‌ها و توسعه snap-[]
+ []
+
+
 
 [26]
+Overfull \hbox (33.57164pt too wide) in paragraph at lines 803--804
+[][]\TU/XBNiloofar(0)/m/n/12 در بخش دوم، سه نوع نویز روی دو مدار کوانتومی اعمال
+ می‌شود و دیتاست‌ها در []\TU/lmroman10-regular(0)/m/n/12 DataTrain/<snapshot>/[
+][]
+ []
+
+)
+
+[27]
 \openout2 = `bibs/bibs.aux'.
 
- (./bibs/bibs.tex (./report_algorithm.bbl)) (./report_algorithm.aux
-(./readout_noise_report.aux) (./bibs/bibs.aux))
+ (./bibs/bibs.tex
+No file report_algorithm.bbl.
+) (./report_algorithm.aux (./readout_noise_report.aux) (./bibs/bibs.aux))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `report_algorithm.out' has not changed.
-(rerunfilecheck)             Checksum: 21E99B68C91814221E986409BF2741C8;11392.
+(rerunfilecheck)             Checksum: 3115E1DCEE30D0E651134BD44EF2A4B0;2075.
  ) 
 Here is how much of TeX's memory you used:
- 38089 strings out of 473831
- 811723 string characters out of 5733136
- 1359933 words of memory out of 5000000
- 60399 multiletter control sequences out of 15000+600000
- 572327 words of font info for 127 fonts, out of 8000000 for 9000
+ 38055 strings out of 473831
+ 811225 string characters out of 5733136
+ 1347403 words of memory out of 5000000
+ 60369 multiletter control sequences out of 15000+600000
+ 572319 words of font info for 126 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 91i,15n,96p,1219b,1020s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 91i,15n,96p,1219b,1012s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on report_algorithm.pdf (26 pages).
+Output written on report_algorithm.pdf (27 pages).
